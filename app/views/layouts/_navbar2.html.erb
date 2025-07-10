@@ -1,0 +1,52 @@
+<div class=" py-3">
+  <div class="max-w-screen-xl mx-auto flex flex-wrap items-center justify-between px-4 py-6 gap-6">
+    <!-- Danh mục sản phẩm -->
+    <div class="flex flex-wrap gap-8 text-sm text-gray-700">
+      <%= link_to "#", class: "flex items-center gap-2 hover:text-primary transition duration-150" do %>
+        <%= image_tag 'chair.png', class: 'max-h-[25px]'%>
+        <span>Chairs</span>
+      <% end %>
+      <%= link_to "#", class: "flex items-center gap-2 hover:text-primary transition duration-150" do %>
+        <%= image_tag 'wardrobe.png', class: 'max-h-[25px]'%>
+        <span>Wardrobe</span>
+      <% end %>
+      <%= link_to "#", class: "flex items-center gap-2 hover:text-primary transition duration-150" do %>
+        <%= image_tag 'sofa.png', class: 'max-h-[25px]'%>
+        <span>Sofas</span>
+      <% end %>
+      <%= link_to "#", class: "flex items-center gap-2 hover:text-primary transition duration-150" do %>
+        <%= image_tag 'bed.png', class: 'max-h-[25px]'%>
+        <span>Beds</span>
+      <% end %>
+      <%= link_to "#", class: "flex items-center gap-2 hover:text-primary transition duration-150" do %>
+        <%= image_tag 'table.png', class: 'max-h-[25px]'%>
+        <span>Tables</span>
+      <% end %>
+      <%= link_to "#", class: "flex items-center gap-2 hover:text-primary transition duration-150" do %>
+        <%= image_tag 'deco.png', class: 'max-h-[25px]'%>
+        <span>Decor</span>
+      <% end %>
+    </div>
+    <!-- Thông tin liên hệ -->
+    <div class="flex flex-wrap items-center gap-6 text-sm text-gray-700">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 flex items-center justify-center rounded-full text-gray-600">
+          <i class="fas fa-map-marker-alt text-sm"></i>
+        </div>
+        <div>
+          <div class="font-semibold text-xs text-gray-700">Address:</div>
+          <div class="text-gray-500 text-xs">Street Name, NY 38954</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 flex items-center justify-center rounded-full text-gray-600">
+          <i class="fas fa-phone-alt text-sm"></i>
+        </div>
+        <div>
+          <div class="font-semibold text-xs text-gray-700">Phone:</div>
+          <div class="text-gray-500 text-xs">123-789-4567</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

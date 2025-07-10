@@ -1,0 +1,128 @@
+<footer class="bg-[#f4f9f9] text-[#1b1f22] py-12 text-sm">
+  <section class="bg-[#152420] py-10 px-4 mb-[30px]">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <!-- Hình ảnh + tiêu đề -->
+      <div class="flex items-center gap-4">
+        <%= image_tag "foot.webp", alt: "Subscribe Icon", class: "w-16 h-16 object-contain" %>
+        <div>
+          <h3 class="text-white font-semibold text-lg">Important updates waiting for you!</h3>
+          <p class="text-gray-300 text-sm">Subscribe and grab 20% OFF!</p>
+        </div>
+      </div>
+      <!-- Form subscribe -->
+      <div>
+        <%= form_with url: "#", method: :post, html: { class: "max-w-xl mx-auto " } do %>
+          <div class="flex items-center w-full border border-[#42504B] rounded-full overflow-hidden relative bg-transparent">
+            <%= email_field_tag :email, nil,
+                placeholder: "Your email *",
+                required: true,
+                class: "flex-1 px-6 py-6 bg-transparent text-white placeholder-gray-400 focus:outline-none text-[16px]" %>
+            <%= submit_tag "Subscribe",
+                class: "absolute right-[8px] bg-[#23403D] hover:bg-[#2f5c57] text-white text-[16px] font-medium px-6 py-4 rounded-full transition duration-200" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+  <div class="max-w-7xl mx-auto px-4">
+    <!-- Contact Info -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 border-b border-gray-200 pb-8">
+      <div>
+        <h3 class="font-semibold mb-2">Get in touch with us</h3>
+        <p class="text-gray-500">Lorem ipsum dolor sit amet consectetur.</p>
+      </div>
+      <div class="flex gap-3 items-start">
+        <div class="bg-white rounded-full border border-gray-300 p-2">
+          <i class="fas fa-map-marker-alt text-gray-600"></i>
+        </div>
+        <div>
+          <p class="font-semibold">Address:</p>
+          <p class="text-gray-500">Street Name, NY 38954</p>
+        </div>
+      </div>
+      <div class="flex gap-3 items-start">
+        <div class="bg-white rounded-full border border-gray-300 p-2">
+          <i class="fas fa-phone-alt text-gray-600"></i>
+        </div>
+        <div>
+          <p class="font-semibold">Phone:</p>
+          <p class="text-gray-500"><%= link_to "(321) 578 393 4937", "tel:(321)578-393-4937" %></p>
+        </div>
+      </div>
+      <div class="flex gap-3 items-start">
+        <div class="bg-white rounded-full border border-gray-300 p-2">
+          <i class="fas fa-clock text-gray-600"></i>
+        </div>
+        <div>
+          <p class="font-semibold">Opening hours</p>
+          <p class="text-gray-500">9AM - 5PM / 10AM - 3PM</p>
+        </div>
+      </div>
+    </div>
+    <!-- Navigation Links -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 py-8 border-b border-gray-200">
+      <%# Shop Categories %>
+      <div>
+        <h4 class="font-semibold mb-4">Shop Categories</h4>
+        <ul class="space-y-2 text-gray-600">
+          <% ["Armchairs", "Beds", "Chairs", "Decor", "Sofas", "Storage", "Tables"].each do |item| %>
+            <li><%= link_to item, "#" %></li>
+          <% end %>
+        </ul>
+      </div>
+      <%# Useful Links %>
+      <div>
+        <h4 class="font-semibold mb-4">Useful Links</h4>
+        <ul class="space-y-2 text-gray-600">
+          <% ["Careers", "Delivery", "Help Center", "Returns & Refunds", "Newsletter", "Status", "Testimonials"].each do |item| %>
+            <li><%= link_to item, "#" %></li>
+          <% end %>
+        </ul>
+      </div>
+      <%# Account %>
+      <div>
+        <h4 class="font-semibold mb-4">Account</h4>
+        <ul class="space-y-2 text-gray-600">
+          <% ["User Dashboard", "Wishlist", "Shipping & Delivery", "Affiliate Program", "Brand Assets", "Support", "Recommendations"].each do |item| %>
+            <li><%= link_to item, "#" %></li>
+          <% end %>
+        </ul>
+      </div>
+      <%# About Company %>
+      <div>
+        <h4 class="font-semibold mb-4">About Company</h4>
+        <ul class="space-y-2 text-gray-600">
+          <% ["About Us", "Our Partners", "Locations", "Design Services", "How it Works", "Customers", "Other Info"].each do |item| %>
+            <li><%= link_to item, "#" %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <!-- Bottom Bar -->
+    <div class="flex flex-col md:flex-row justify-between items-center pt-6 text-gray-500 text-sm">
+      <p>&copy; 2025 - <%= link_to "CreativeThemes", "https://creativethemes.com", target: "_blank", class: "hover:underline" %></p>
+      <div class="flex items-center space-x-4 mt-4 md:mt-0">
+        <%= link_to "#", class: "hover:text-black" do %>
+          <i class="fab fa-facebook-f"></i>
+        <% end %>
+        <%= link_to "#", class: "hover:text-black" do %>
+          <i class="fab fa-x-twitter"></i>
+        <% end %>
+        <%= link_to "#", class: "hover:text-black" do %>
+          <i class="fab fa-instagram"></i>
+        <% end %>
+        <%= link_to "#", class: "hover:text-black" do %>
+          <i class="fab fa-linkedin-in"></i>
+        <% end %>
+        <%= link_to "#", class: "hover:text-black" do %>
+          <i class="fab fa-medium-m"></i>
+        <% end %>
+      </div>
+      <ul class="flex items-center space-x-4 mt-4 md:mt-0">
+        <li><%= link_to "Privacy Policy", "#" %></li>
+        <li><%= link_to "Terms & Conditions", "#" %></li>
+        <li><%= link_to "Site Map", "#" %></li>
+      </ul>
+    </div>
+  </div>
+</footer>
