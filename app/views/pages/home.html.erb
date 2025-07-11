@@ -1,5 +1,119 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
-<% 100.times do |x| %>
-  <div>demo <%= x%></div>
-<%end%>
+<div class="bg-[#f1f8f7] rounded-3xl p-10 max-w-7xl mx-auto my-12 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+  <!-- Left Column -->
+  <div>
+    <h2 class="text-4xl font-extrabold text-gray-900 leading-tight mb-6">
+      Exquisite design<br />
+      combined with<br />
+      functionalities
+    </h2>
+    <p class="text-gray-600 mb-6">
+      Pellentesque ullamcorper dignissim condimentum volutpat consequat mauris nunc lacinia quis.
+    </p>
+    <!-- Expert Section -->
+    <div class="flex items-center bg-white rounded-full px-4 py-2 shadow w-max mb-6">
+      <%= link_to about_path, class: "text-sm text-gray-700 font-medium" do %>
+        <span class="ml-4 text-sm text-gray-700 font-medium">Contact with our expert</span>
+      <% end %>
+    </div>
+    <!-- Shop Now Button -->
+    <%= link_to "Shop Now", products_path, class: "inline-block bg-[#0f2d21] text-white px-6 py-3 rounded-full font-medium hover:bg-[#244033] transition" %>
+  </div>
+  <!-- Right Column -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+    <!-- Wooden Chair -->
+    <div class="relative rounded-3xl overflow-hidden shadow-lg">
+      <%= image_tag 'home1.jpg', class: "w-full h-full object-cover" %>
+      <%= link_to products_path do %>
+        <div class="absolute bottom-4 left-4">
+          <button class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow hover:scale-105 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      <% end %>
+    </div>
+    <div class="flex flex-col gap-6">
+      <!-- Pretium Elite -->
+      <div class="relative bg-[#d5e6e5] rounded-3xl flex flex-col items-center justify-between h-full shadow ">
+        <%= image_tag 'home2.jpg', class: "w-full h-full object-cover rounded-3xl" %>
+        <%= link_to products_path do %>
+          <div class="absolute bottom-4 left-4">
+            <button class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow hover:scale-105 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+        <% end %>
+      </div>
+      <!-- 25% OFF Box -->
+      <div class="bg-[#234640] text-white rounded-3xl p-6 text-center flex flex-col items-center justify-center h-full shadow">
+        <h5 class="text-xl font-bold mb-2">25% OFF</h5>
+        <%= link_to "Explore Now", products_path, class: "bg-white text-[#234640] px-5 py-2 rounded-full text-sm font-medium hover:bg-gray-100 transition" %>
+      </div>
+    </div>
+  </div>
+</div>
+<!--part 2-->
+<div class="bg-[#152420] rounded-3xl max-w-7xl mx-auto p-8 md:p-16 text-white">
+  <!-- Grid Layout -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Left Large Image -->
+    <div class="relative">
+      <h3 class="text-2xl md:text-3xl font-semibold mb-4">Browse by rooms</h3>
+      <p class="text-gray-300 mb-10">
+        Sit massa etiam urna id. Non pulvinar aenean ultrices lectus vitae imperdiet vulputate a eu. Aliquet ullamcorper leo mi vel sit pretium euismod eget.
+      </p>
+      <div class="relative">
+        <%= image_tag "home3.webp", class: "rounded-xl w-full h-full object-cover hover:scale-105 transition-all duration-700" %>
+      </div>
+    </div>
+    <!-- Right Column with 3 smaller boxes -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <!-- Bedroom -->
+      <div class="relative col-span-2">
+        <%= image_tag "home4.webp", class: "rounded-xl w-full h-auto object-cover hover:scale-105 transition-all duration-700" %>
+      </div>
+      <!-- Walk-in Closet -->
+      <div class="relative">
+        <%= image_tag "home5.webp", class: "rounded-xl w-full h-auto object-cover hover:scale-105 transition-all duration-700" %>
+      </div>
+      <!-- Kitchen -->
+      <div class="relative">
+        <%= image_tag "home6.webp", class: "rounded-xl w-full h-auto object-cover hover:scale-105 transition-all duration-700" %>
+      </div>
+    </div>
+  </div>
+</div>
+<!--part 3-->
+<div class="bg-white max-w-7xl mx-auto px-6 md:px-16 py-12 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+  <!-- Left Text -->
+  <div>
+    <h2 class="text-3xl md:text-4xl font-bold text-[#152420] leading-snug mb-6">
+      Luxurious Furniture Starts<br />
+      with the Best Quality<br />
+      Materials
+    </h2>
+    <p class="text-gray-600 mb-8">
+      Donec et odio pellentesque diam volutpat commodo amet consectetur adipiscing elit ut aliquam purus vitae et leo duis ut diam quam nulla porttitor. Sodales ut eu sem integer vitae justo eget magna.
+    </p>
+    <%= link_to products_path, class: "bg-[#2c4c48] text-white px-6 py-3 rounded-full hover:bg-[#1f3532] transition" do %>
+      Learn More
+    <% end %>
+  </div>
+  <!-- Right SVG Clipped Image -->
+  <div class="relative h-[400px] w-full">
+    <svg class="absolute inset-0 w-full h-full rounded-3xl" viewBox="0 0 920 700" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <clipPath id="mask-three-panels" clipPathUnits="objectBoundingBox">
+          <path d="M0.522,0.043 v0.914 c0,0.024-0.022,0.043-0.048,0.043 h-0.478 c-0.026,0-0.048-0.019-0.048-0.043 v-0.914 c0-0.024,0.022-0.043,0.048-0.043 h0.478 c0.026,0,0.048,0.019,0.048,0.043 ZM0.728,0 h-0.13 c-0.026,0-0.048,0.019-0.048,0.043 v0.914 c0,0.024,0.022,0.043,0.048,0.043 h0.13 c0.026,0,0.048-0.019,0.048-0.043 v-0.914 c0-0.024-0.022-0.043-0.048-0.043 ZM0.967,0 h-0.13 c-0.026,0-0.048,0.019-0.048,0.043 v0.914 c0,0.024,0.022,0.043,0.048,0.043 h0.13 c0.026,0,0.048-0.019,0.048-0.043 v-0.914 c0-0.024-0.022-0.043-0.048-0.043 Z"/>
+        </clipPath>
+      </defs>
+      <image href="<%= asset_path('home7.webp') %>"
+        width="920" height="700"
+        preserveAspectRatio="xMidYMid slice"
+        clip-path="url(#mask-three-panels)" />
+      </svg>
+    </div>
+  </div>

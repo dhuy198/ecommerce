@@ -1,0 +1,45 @@
+<%= form_with(model: category, class: "space-y-6") do |form| %>
+  <% if category.errors.any? %>
+    <div class="bg-red-50 border border-red-200 rounded-md p-4 mb-6">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <i class="fas fa-exclamation-triangle text-red-400"></i>
+        </div>
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-red-800">
+            <%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:
+          </h3>
+          <div class="mt-2 text-sm text-red-700">
+            <ul class="list-disc pl-5 space-y-1">
+              <% category.errors.each do |error| %>
+                <li><%= error.full_message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <div class="space-y-6">
+    <!-- Category Name Field -->
+    <div>
+      <%= form.label :name, class: "block text-sm font-medium text-gray-700 mb-2" do %>
+        <i class="fas fa-tag mr-2 text-[#152420]"></i>
+        Category Name
+      <% end %>
+      <%= form.text_field :name, 
+          class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#152420] focus:border-[#152420] transition-colors duration-200",
+          placeholder: "Enter category name..." %>
+      <p class="mt-1 text-sm text-gray-500">
+        Choose a descriptive name that helps organize your products
+      </p>
+    </div>
+    <!-- Submit Button -->
+    <div class="flex justify-end pt-6 border-t border-gray-200">
+      <%= form.submit class: "inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#152420] hover:bg-[#23403D] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#152420] transition-colors duration-200" do %>
+        <i class="fas fa-save mr-2"></i>
+        <%= category.new_record? ? "Create Category" : "Update Category" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

@@ -7,3 +7,10 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+Category.create!([
+  { name: "Thời trang", slug: "thoi-trang" },
+  { name: "Điện tử", slug: "dien-tu" },
+  { name: "Sách", slug: "sach" },
+  { name: "Mỹ phẩm", slug: "my-pham" },
+  { name: "Thể thao", slug: "the-thao" }
+])

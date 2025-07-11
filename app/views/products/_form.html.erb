@@ -1,0 +1,103 @@
+<%= form_with(model: product, class: "space-y-6") do |form| %>
+  <% if product.errors.any? %>
+    <div class="bg-red-50 border border-red-200 rounded-md p-4 mb-6">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <i class="fas fa-exclamation-triangle text-red-400"></i>
+        </div>
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-red-800">
+            <%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:
+          </h3>
+          <div class="mt-2 text-sm text-red-700">
+            <ul class="list-disc pl-5 space-y-1">
+              <% product.errors.each do |error| %>
+                <li><%= error.full_message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <div class="space-y-6">
+    <!-- Product Name -->
+    <div>
+      <%= form.label :name, class: "block text-sm font-medium text-gray-700 mb-2" do %>
+        <i class="fas fa-tag mr-2 text-[#152420]"></i>
+        Product Name
+      <% end %>
+      <%= form.text_field :name, 
+          class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#152420] focus:border-[#152420] transition-colors duration-200",
+          placeholder: "Enter product name..." %>
+    </div>
+    <!-- Image -->
+    <div>
+      <%= form.label :image, class: "block text-sm font-medium text-gray-700 mb-2" do %>
+        <i class="fas fa-image mr-2 text-[#152420]"></i>
+        Image
+      <% end %>
+      <% if product.image.attached? %>
+        <div class="mb-4 p-4 bg-gray-50 border border-gray-200 rounded flex flex-col items-start">
+          <span class="text-xs text-gray-500 mb-2">Current Image:</span>
+          <%= image_tag product.image, width: 200, class: "rounded shadow mb-2 hover:scale-105 transition-transform duration-200 border border-gray-300" %>
+        </div>
+      <% end %>
+      <div class="flex items-center gap-3">
+        <label for="product_image" class="inline-flex items-center px-4 py-2 bg-[#f4f9f9] border border-gray-300 rounded-md shadow-sm text-sm font-medium text-[#152420] hover:bg-gray-100 cursor-pointer transition-colors duration-200">
+          <i class="fas fa-upload mr-2"></i>
+          Choose image
+        </label>
+        <span class="text-xs text-gray-500">(Support JPG, PNG, WEBP)</span>
+        <%= form.file_field :image, id: "product_image", class: "hidden", accept: ".jpg,.jpeg,.png,.webp" %>
+        <span id="selected-image-name" class="ml-2 text-sm text-blue-600"></span>
+      </div>
+    </div>
+    <!-- Description -->
+    <div>
+      <%= form.label :description, class: "block text-sm font-medium text-gray-700 mb-2" do %>
+        <i class="fas fa-align-left mr-2 text-[#152420]"></i>
+        Description
+      <% end %>
+      <%= form.text_area :description, 
+          class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#152420] focus:border-[#152420] transition-colors duration-200",
+          placeholder: "Enter product description...", rows: 3 %>
+    </div>
+    <!-- Price -->
+    <div>
+      <%= form.label :price, class: "block text-sm font-medium text-gray-700 mb-2" do %>
+        <i class="fas fa-dollar-sign mr-2 text-[#152420]"></i>
+        Price
+      <% end %>
+      <%= form.text_field :price, 
+          class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#152420] focus:border-[#152420] transition-colors duration-200",
+          placeholder: "Enter price..." %>
+    </div>
+    <!-- Stock -->
+    <div>
+      <%= form.label :stock, class: "block text-sm font-medium text-gray-700 mb-2" do %>
+        <i class="fas fa-boxes mr-2 text-[#152420]"></i>
+        Stock
+      <% end %>
+      <%= form.number_field :stock, 
+          class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#152420] focus:border-[#152420] transition-colors duration-200",
+          placeholder: "Enter stock quantity..." %>
+    </div>
+    <!-- Category -->
+    <div>
+      <%= form.label :category_id, class: "block text-sm font-medium text-gray-700 mb-2" do %>
+        <i class="fas fa-list mr-2 text-[#152420]"></i>
+        Category
+      <% end %>
+      <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: "Select category" },
+          { class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-white focus:outline-none focus:ring-[#152420] focus:border-[#152420] transition-colors duration-200" } %>
+    </div>
+    <!-- Submit Button -->
+    <div class="flex justify-end pt-6 border-t border-gray-200">
+      <%= form.submit class: "inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#152420] hover:bg-[#23403D] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#152420] transition-colors duration-200" do %>
+        <i class="fas fa-save mr-2"></i>
+        <%= product.new_record? ? "Create Product" : "Update Product" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

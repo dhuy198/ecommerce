@@ -2,29 +2,13 @@
   <div class="max-w-screen-xl mx-auto flex flex-wrap items-center justify-between px-4 py-6 gap-6">
     <!-- Danh mục sản phẩm -->
     <div class="flex flex-wrap gap-8 text-sm text-gray-700">
-      <%= link_to "#", class: "flex items-center gap-2 hover:text-primary transition duration-150" do %>
-        <%= image_tag 'chair.png', class: 'max-h-[25px]'%>
-        <span>Chairs</span>
-      <% end %>
-      <%= link_to "#", class: "flex items-center gap-2 hover:text-primary transition duration-150" do %>
-        <%= image_tag 'wardrobe.png', class: 'max-h-[25px]'%>
-        <span>Wardrobe</span>
-      <% end %>
-      <%= link_to "#", class: "flex items-center gap-2 hover:text-primary transition duration-150" do %>
-        <%= image_tag 'sofa.png', class: 'max-h-[25px]'%>
-        <span>Sofas</span>
-      <% end %>
-      <%= link_to "#", class: "flex items-center gap-2 hover:text-primary transition duration-150" do %>
-        <%= image_tag 'bed.png', class: 'max-h-[25px]'%>
-        <span>Beds</span>
-      <% end %>
-      <%= link_to "#", class: "flex items-center gap-2 hover:text-primary transition duration-150" do %>
-        <%= image_tag 'table.png', class: 'max-h-[25px]'%>
-        <span>Tables</span>
-      <% end %>
-      <%= link_to "#", class: "flex items-center gap-2 hover:text-primary transition duration-150" do %>
-        <%= image_tag 'deco.png', class: 'max-h-[25px]'%>
-        <span>Decor</span>
+      <% if @categories.present? %>
+        <% @categories.each do |category| %>
+          <%= link_to category_path(category), class: "flex items-center gap-2 hover:text-primary transition duration-150" do %>
+            <%= category_image_tag(category, class: 'max-h-[25px]') %>
+            <span><%= category.name %></span>
+          <% end %>
+        <% end %>
       <% end %>
     </div>
     <!-- Thông tin liên hệ -->
