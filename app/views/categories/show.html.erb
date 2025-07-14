@@ -1,1 +1,68 @@
-<%= @category.name %>
+<% content_for :title, "Products" %>
+<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <!-- Header Section -->
+  <div class="flex flex-col lg:flex-row gap-8">
+    <%= render "products/banner", title: @category.name%>
+  </div>
+  <!--Product List-->
+  <div class="grid md:grid-cols-3 gap-8">
+    <!-- Sidebar - chiếm 1/3 -->
+    <div class="w-full max-w-md mx-auto px-4 py-6">
+      <h3 class="text-[clamp(18px,0.875rem+((1vw-3.2px)*0.156),20px)] font-semibold text-gray-900 mb-4">
+        Top sales
+      </h3>
+      <ul class="space-y-5">
+        <% @products.includes(:category).limit(5).each do |product| %>
+          <li class="flex items-center">
+            <!-- Ảnh -->
+            <%= link_to product_path(product), class: "block w-20 h-20 mr-4 shrink-0 " do %>
+              <%= image_tag product.image, alt: product.name,
+              class: "w-full h-full object-cover rounded-xl" %>
+            <% end %>
+            <!-- Tên & giá -->
+            <div>
+              <h4 class="text-[clamp(14px,0.875rem+((1vw-3.2px)*0.078),15px)] font-medium text-gray-900 mb-1">
+                <%= link_to product.name, product_path(product), class: "hover:underline" %>
+              </h4>
+              <div class="text-[13px] text-gray-700 leading-snug">
+                <%= number_to_currency(product.price, precision: 0) %>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    <!-- Product List - chiếm 2/3 -->
+    <div class="md:col-span-2">
+      <div class="mb-4 flex justify-between items-center w-full">
+        <div class="text-sm text-gray-500">
+          Showing <%= @products.count %> products
+        </div>
+        <%= form_with url: products_path, method: :get, local: true, id: "sort-form", html: { class: "ml-auto" } do %>
+          <%= hidden_field_tag :category_id, params[:category_id] %>
+          <%= hidden_field_tag :query, params[:query] if params[:query].present? %>
+          <div class="relative w-48">
+            <%= select_tag :sort, 
+    options_for_select([
+      ["Default sorting", ""],
+      ["Price: Low to high", "price_asc"],
+      ["Price: High to low", "price_desc"]
+    ], params[:sort]),
+    class: "block w-full appearance-none rounded-full border border-gray-300 bg-white px-4 py-2 pr-10 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none",
+    onchange: "this.form.submit()" %>
+            <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-500">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <% @products.each do |product| %>
+          <%= render "products/product", product: product %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
