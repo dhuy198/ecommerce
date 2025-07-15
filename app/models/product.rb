@@ -1,5 +1,7 @@
 class Product < ApplicationRecord
   belongs_to :category
+  has_many :wishlist_items, dependent: :destroy
+  has_many :wishlists, through: :wishlist_items
 
   validates :name, :description, :category_id, presence: true
   validates :price, presence: true, numericality: {

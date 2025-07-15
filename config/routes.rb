@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # get "wishlists", to: "wishlists#show"
+  resource :wishlist, only: [ :show ]
+  resources :wishlist_items, only: [ :create, :destroy ]
   devise_for :users, controllers: {
     sessions: "user/sessions",
     registrations: "user/registrations",
