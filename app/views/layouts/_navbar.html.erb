@@ -101,7 +101,7 @@
         </div>
         <%= link_to wishlist_path(), aria: { label: "Wishlist" },class: 'mr-3' do %>
           <i class="far fa-heart relative">
-            <% if current_user.wishlist.wishlist_items.present?%>
+            <% if user_signed_in?%>
               <span class="absolute top-[-10px] right-[-10px] bg-[#274C4F] text-white text-[8px] rounded-full px-[5px] py-[3px]">
                 <%= current_user.wishlist.wishlist_items.count %>
               </span>
@@ -111,7 +111,7 @@
         <%= link_to cart_path, class: "relative", aria: { label: "Cart" } do %>
           <div class="relative w-6 h-6">
             <%= image_tag 'cart.png' %>
-            <% if current_user.cart.cart_items.present? %>
+            <% if user_signed_in?%>
               <span class="absolute top-[-5px] right-[-5px] bg-[#274C4F] text-white text-[10px] rounded-full px-[5px] py-[1px]">
                 <%= current_user.cart.cart_items.uniq.count %>
               </span>
