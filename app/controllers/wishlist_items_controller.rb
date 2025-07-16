@@ -3,7 +3,6 @@ class WishlistItemsController < ApplicationController
 
   def create
     @wishlist = current_user.wishlist
-    # Check if product is already in wishlist
     if @wishlist.products.include?(Product.find(params[:product_id]))
       redirect_back(fallback_location: root_path, alert: "Product is already in your wishlist")
       return

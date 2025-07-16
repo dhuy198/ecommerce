@@ -1,0 +1,79 @@
+<div class="container mx-auto my-10">
+  <h1 class="text-3xl font-bold mb-8">Cart</h1>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+    <!-- Danh sách sản phẩm -->
+    <div class="md:col-span-2">
+      <% if @cart.cart_items.any? %>
+        <div class="space-y-6">
+          <% @cart.cart_items.each do |item| %>
+            <div class="grid grid-cols-12 gap-4 items-center p-4 border border-gray-200 rounded-xl shadow-sm bg-white">
+              <!-- Image -->
+              <div class="col-span-2">
+                <%= image_tag item.product.image, class: "w-20 h-20 object-cover rounded-lg shadow" %>
+              </div>
+              <!-- Product Name + Price -->
+              <div class="col-span-4">
+                <div class="font-semibold text-gray-800 text-base"><%= item.product.name %></div>
+                <div class="text-gray-500 text-sm mt-1">$<%= '%.2f' % item.product.price %></div>
+              </div>
+              <!-- Quantity -->
+              <div class="col-span-3">
+                <div class="inline-flex items-center border border-gray-300 rounded-full px-4 py-1 bg-white">
+                  <%= button_to "-", decrease_cart_item_path(item), method: :patch, class: "px-3 text-lg text-gray-600 hover:text-black" %>
+                  <span class="px-4 text-sm text-gray-800"><%= item.quantity %></span>
+                  <%= button_to "+", increase_cart_item_path(item), method: :patch, class: "px-3 text-lg text-gray-600 hover:text-black" %>
+                </div>
+              </div>
+              <!-- Subtotal -->
+              <div class="col-span-2 text-sm text-gray-800 font-medium">
+                $<%= '%.2f' % (item.product.price * item.quantity) %>
+              </div>
+              <!-- Remove -->
+              <div class="col-span-1 text-right">
+                <%= button_to cart_item_path(item), method: :delete, class: "text-gray-400 pr-4 text-sm cursor-pointer" do %>
+                  <i class="fas fa-trash"></i>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <!-- Continue Shopping -->
+        <div class="mt-8">
+          <%= link_to "Continue shopping", products_path, class: "inline-block bg-white border border-gray-300 hover:border-gray-400 text-gray-700 px-6 py-2 rounded-full shadow-sm transition" %>
+        </div>
+      <% else %>
+        <div class="text-center text-gray-500 mt-6">
+          <p>Your cart is empty.</p>
+          <%= link_to "Continue shopping", products_path, class: "text-blue-500 hover:text-blue-600 underline" %>
+        </div>
+      <% end %>
+    </div>
+    <!-- Cart Totals -->
+    <div class="border border-gray-200 rounded-xl p-8 shadow-sm bg-white h-fit">
+      <h2 class="text-xl font-semibold mb-6 text-gray-800">Cart totals</h2>
+      <div class="flex justify-between mb-3 text-sm text-gray-600">
+        <span>Subtotal</span>
+        <span>$<%= '%.2f' % @cart.cart_items.sum { |item| item.product.price * item.quantity } %></span>
+      </div>
+      <div class="flex justify-between text-base font-bold text-gray-800 mb-6">
+        <span>Total</span>
+        <span>$<%= '%.2f' % @cart.cart_items.sum { |item| item.product.price * item.quantity } %></span>
+      </div>
+      <% target = 2000.0 %>
+      <% current_total = @cart.cart_items.sum { |item| item.product.price * item.quantity } %>
+      <% remaining = target - current_total %>
+      <% progress = [100, (current_total / target * 100).to_i].min %>
+      <div class="mb-6 text-sm text-gray-600">
+        <% if remaining > 0 %>
+          Add <span class="font-medium text-gray-800">$<%= '%.2f' % remaining %></span> more to get free shipping!
+        <% else %>
+          <span class="text-green-700 font-medium">You have free shipping!</span>
+        <% end %>
+        <div class="w-full h-2 bg-gray-200 mt-3 rounded-full overflow-hidden">
+          <div class="h-full bg-teal-700 rounded-full transition-all duration-300" style="width: <%= progress %>%"></div>
+        </div>
+      </div>
+      <%= link_to "Proceed to checkout", '#', class: "block w-full bg-teal-700 hover:bg-teal-800 text-white text-center py-3 rounded-full font-semibold text-sm transition" %>
+    </div>
+  </div>
+</div>
