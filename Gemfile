@@ -63,5 +63,5 @@ group :test do
 end
 
 gem "devise"
-
 gem "ransack", "~> 4.3"
+gem "stripe"

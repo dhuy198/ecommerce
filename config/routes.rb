@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  # get "wishlists", to: "wishlists#show"
-  resource :wishlist, only: [ :show ]
-  resources :wishlist_items, only: [ :create, :destroy ]
   devise_for :users, controllers: {
     sessions: "user/sessions",
     registrations: "user/registrations",
@@ -15,6 +12,18 @@ Rails.application.routes.draw do
   authenticate :user, ->(user) { user.admin? } do
     namespace :admin do
       get "dashboard", to: "dashboard#index"
+    end
+  end
+
+  resource :wishlist, only: [ :show ]
+  resources :wishlist_items, only: [ :create, :destroy ]
+  resource :cart
+  resources :cart_items, only: [ :create, :destroy ] do
+    scope :cart_item do
+      member do
+        patch :increase
+        patch :decrease
+      end
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

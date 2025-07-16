@@ -5,7 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_one :wishlist, dependent: :destroy
-  after_create :create_wishlist
+  has_one :cart, dependent: :destroy
+  after_create :create_wishlist, :create_cart
 
   enum :role, { user: 0, admin: 1 }
   after_initialize :set_default_role, if: :new_record?
@@ -17,5 +18,6 @@ class User < ApplicationRecord
 
   def create_wishlist
     build_wishlist.save!
+    build_cart.save!
   end
 end

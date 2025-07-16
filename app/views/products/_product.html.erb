@@ -48,6 +48,6 @@
     <span class="text-lg font-bold text-gray-800">
       <%= number_with_precision(product.price, precision: 2) %>
     </span>
-    <%= link_to "Add to cart", '#', class: "text-gray-600 hover:text-black cursor-pointer" %>
+    <%= button_to "Add to cart", cart_items_path(product_id: product.id, quantity: 1), method: :post, class: "text-gray-600 hover:text-black cursor-pointer" %>
   </div>
 </div>

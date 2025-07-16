@@ -47,7 +47,7 @@
       </button>
     <% end %>
     <!-- Navigation + Icons -->
-    <div class="flex items-center gap-6 text-gray-700 text-sm">
+    <div class="flex items-center text-gray-700 text-sm">
       <nav class="hidden md:flex items-center gap-6 mr-[60px]">
         <%= link_to "Home", root_path, class: "hover:text-primary py-[50px]" %>
         <%= link_to "Shop", products_path, class: "hover:text-primary relative group py-[50px]" %>
@@ -99,7 +99,7 @@
             <% end %>
           </div>
         </div>
-        <%= link_to wishlist_path(), aria: { label: "Wishlist" } do %>
+        <%= link_to wishlist_path(), aria: { label: "Wishlist" },class: 'mr-3' do %>
           <i class="far fa-heart relative">
             <% if current_user.wishlist.wishlist_items.present?%>
               <span class="absolute top-[-10px] right-[-10px] bg-[#274C4F] text-white text-[8px] rounded-full px-[5px] py-[3px]">
@@ -108,9 +108,16 @@
             <% end %>
           </i>
         </div>
-      <% end %>
-      <%= link_to "#", class: "relative", aria: { label: "Cart" } do %>
-        <%= image_tag 'cart.png'%>
+        <%= link_to cart_path, class: "relative", aria: { label: "Cart" } do %>
+          <div class="relative w-6 h-6">
+            <%= image_tag 'cart.png' %>
+            <% if current_user.cart.cart_items.present? %>
+              <span class="absolute top-[-5px] right-[-5px] bg-[#274C4F] text-white text-[10px] rounded-full px-[5px] py-[1px]">
+                <%= current_user.cart.cart_items.uniq.count %>
+              </span>
+            <% end %>
+          </div>
+        <% end %>
       <% end %>
     </div>
   </div>
