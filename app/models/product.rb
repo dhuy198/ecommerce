@@ -13,5 +13,5 @@ class Product < ApplicationRecord
     greater_than_or_equal_to: 0
   }
 
-  has_one_attached :image
+  has_many_attached :images
 end

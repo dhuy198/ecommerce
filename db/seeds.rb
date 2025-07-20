@@ -8,9 +8,87 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 Category.create!([
-  { name: "Thời trang", slug: "thoi-trang" },
-  { name: "Điện tử", slug: "dien-tu" },
-  { name: "Sách", slug: "sach" },
-  { name: "Mỹ phẩm", slug: "my-pham" },
-  { name: "Thể thao", slug: "the-thao" }
+  { name: "Chair"},
+  { name: "Wardrobe"},
+  { name: "Sofa"},
+  { name: "Bed"},
+  { name: "Table"},
+  { name: "Decor"}
 ])
+
+User.create!(email: "user@example.com", password: "123456", name: "user")
+User.create!(email: "admin@example.com", password: "123456", name: "admin", role: "admin")
+
+chair_category = Category.find_by(name: "Chair")
+2.times do |i| 
+  chair = Product.create!({
+
+    name: "Comfortable Chair #{i+1}",
+    description: "A very comfortable and stylish chair.",
+    price: 10 + i*20,
+    stock: 20,
+    category: chair_category,
+    is_deleted: false
+  })
+
+  chair.images.attach(io: File.open("db/image/chair/chair#{i+1}_1.webp"), filename: chair.name)
+  chair.images.attach(io: File.open("db/image/chair/chair#{i+1}_2.webp"), filename: chair.name)
+  chair.images.attach(io: File.open("db/image/chair/chair#{i+1}_3.webp"), filename: chair.name)
+  chair.images.attach(io: File.open("db/image/chair/chair#{i+1}_4.webp"), filename: chair.name)
+  chair.images.attach(io: File.open("db/image/chair/chair#{i+1}_5.webp"), filename: chair.name)
+end
+
+table_category = Category.find_by(name: "Table")
+2.times do |i| 
+  table = Product.create!({
+
+    name: "Comfortable table #{i+1}",
+    description: "A very comfortable and stylish table.",
+    price: 33 + i*21,
+    stock: 20,
+    category: table_category,
+    is_deleted: false
+  })
+
+  table.images.attach(io: File.open("db/image/table/table#{i+1}_1.webp"), filename: table.name)
+  table.images.attach(io: File.open("db/image/table/table#{i+1}_2.webp"), filename: table.name)
+  table.images.attach(io: File.open("db/image/table/table#{i+1}_3.webp"), filename: table.name)
+  table.images.attach(io: File.open("db/image/table/table#{i+1}_4.webp"), filename: table.name)
+end
+
+sofa_category = Category.find_by(name: "Sofa")
+2.times do |i| 
+  sofa = Product.create!({
+
+    name: "Comfortable sofa #{i+1}",
+    description: "A very comfortable and stylish sofa.",
+    price: 10 + i*20,
+    stock: 20,
+    category: sofa_category,
+    is_deleted: false
+  })
+
+  sofa.images.attach(io: File.open("db/image/sofa/sofa#{i+1}_1.webp"), filename: sofa.name)
+  sofa.images.attach(io: File.open("db/image/sofa/sofa#{i+1}_2.webp"), filename: sofa.name)
+  sofa.images.attach(io: File.open("db/image/sofa/sofa#{i+1}_3.webp"), filename: sofa.name)
+  sofa.images.attach(io: File.open("db/image/sofa/sofa#{i+1}_4.webp"), filename: sofa.name)
+  sofa.images.attach(io: File.open("db/image/sofa/sofa#{i+1}_5.webp"), filename: sofa.name)
+end
+
+bed_category = Category.find_by(name: "Bed")
+2.times do |i| 
+  bed = Product.create!({
+
+    name: "Comforbed bed #{i+1}",
+    description: "A very comforbed and stylish bed.",
+    price: 33 + i*21,
+    stock: 20,
+    category: bed_category,
+    is_deleted: false
+  })
+
+  bed.images.attach(io: File.open("db/image/bed/bed#{i+1}_1.webp"), filename: bed.name)
+  bed.images.attach(io: File.open("db/image/bed/bed#{i+1}_2.webp"), filename: bed.name)
+  bed.images.attach(io: File.open("db/image/bed/bed#{i+1}_3.webp"), filename: bed.name)
+  bed.images.attach(io: File.open("db/image/bed/bed#{i+1}_4.webp"), filename: bed.name)
+end

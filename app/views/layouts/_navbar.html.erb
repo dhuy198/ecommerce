@@ -1,5 +1,5 @@
 <!-- Top Bar -->
-<div class="w-full  bg-[#152420] text-white h-[40px]">
+<div class="w-full  bg-[#152420] text-white h-[40px]" >
   <div class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto px-4 py-2">
     <!-- Navigation Menu -->
     <nav class="flex gap-4 text-sm">
@@ -56,12 +56,12 @@
       <!-- Icons -->
       <div class="flex items-center gap-4 text-lg">
         <!-- User Dropdown -->
-        <div class="relative group">
-          <button class="flex items-center gap-2 hover:text-primary transition-colors" aria-label="User menu">
+        <div class="relative group" data-controller="dropdown">
+          <button class="cursor-pointer flex items-center gap-2 hover:text-primary transition-colors" aria-label="User menu" data-action="click->dropdown#toggle">
             <i class="far fa-user"></i>
           </button>
           <!-- Dropdown Menu -->
-          <div class="absolute left-1/2 -translate-x-1/2 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+          <div class="hidden absolute left-1/2 -translate-x-1/2 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 transition-all duration-200 z-50" data-dropdown-target="menu">
             <% if user_signed_in? %>
               <!-- Logged in user options -->
               <div class="py-1">
