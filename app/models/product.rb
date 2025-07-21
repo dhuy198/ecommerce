@@ -4,6 +4,7 @@ class Product < ApplicationRecord
   has_many :wishlists, through: :wishlist_items
   has_many :cart_items, dependent: :destroy
   has_many :carts, through: :cart_items
+  has_many :reviews, dependent: :destroy
 
   validates :name, :description, :category_id, presence: true
   validates :price, presence: true, numericality: {

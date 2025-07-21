@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   has_one :wishlist, dependent: :destroy
   has_one :cart, dependent: :destroy
+  has_many :reviews, dependent: :destroy
+  
   after_create :create_wishlist, :create_cart
 
   enum :role, { user: 0, admin: 1 }

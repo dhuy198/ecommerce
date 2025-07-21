@@ -1,0 +1,17 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-2xl mx-auto">
+    <h1 class="text-3xl font-bold mb-6">Write a Review for <%= @product.name %></h1>
+    <%= form_with(model: [@product, @product.reviews.build]), local: true, class: "space-y-6" do |form| %>
+      <% if @review.errors.any? %>
+        <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+          <h2 class="font-bold">Please correct the following errors:</h2>
+          <ul class="list-disc list-inside">
+            <% @review.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    <%end%>
+  </div>
+</div>

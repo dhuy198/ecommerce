@@ -1,0 +1,10 @@
+<%= form_with(model: [product, review], local: false) do |form| %>
+  <div class="space-y-2">
+    <%= form.text_area :comment, class: "form-textarea w-full border border-gray-300 rounded-xl p-3" %>
+    <%= form.number_field :star, in: 1..5, class: "form-input w-24 border border-gray-300 rounded-xl p-2" %>
+    <div class="flex gap-2 mt-2">
+      <%= form.submit "Lưu", class: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow transition" %>
+      <%= link_to "Hủy", product_path(product), data: { turbo_frame: "_top" }, class: "bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg shadow transition" %>
+    </div>
+  </div>
+<% end %>

@@ -4,7 +4,9 @@ Rails.application.routes.draw do
     registrations: "user/registrations",
     passwords: "user/passwords"
   }
-  resources :products
+  resources :products do 
+    resources :reviews 
+  end
   resources :categories
   get "home", to: "pages#home"
   get "about", to: "pages#about"
