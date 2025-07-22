@@ -101,11 +101,15 @@
         </div>
         <%= link_to wishlist_path(), aria: { label: "Wishlist" },class: 'mr-3' do %>
           <i class="far fa-heart relative">
-            <% if user_signed_in? && current_user.wishlist.wishlist_items.present?%>
-              <span class="absolute top-[-10px] right-[-10px] bg-[#274C4F] text-white text-[8px] rounded-full px-[5px] py-[3px]">
-                <%= current_user.wishlist.wishlist_items.count %>
-              </span>
-            <% end %>
+            <span 
+              class="absolute top-[-10px] right-[-10px] bg-[#274C4F] text-white text-[8px] rounded-full px-[5px] py-[3px]"
+              id="wishlistCount" 
+              data-controller="wishlist"
+              data-wishlist-target="text"
+              data-wishlist-count="<%= current_user&.wishlist&.wishlist_items&.count || 0 %>"
+            >
+              <%= current_user&.wishlist&.wishlist_items&.count || 0 %>
+            </span>
           </i>
         </div>
         <%= link_to cart_path, class: "relative", aria: { label: "Cart" } do %>
