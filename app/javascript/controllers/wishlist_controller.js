@@ -3,12 +3,6 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
   static targets = ["text"];
   update() {
-    const check = this.element.dataset.userLogin;
-    if (check === "false") {
-      document.getElementById("login").click();
-      return;
-    }
-
     if (this.element.dataset.status === "false") {
       const product_id = this.element.dataset.productId;
       const wishlist_id = this.element.dataset.wishlistId;
@@ -49,7 +43,7 @@ export default class extends Controller {
         navbar.innerText = newCount;
         navbar.dataset.wishlistCount = newCount;
 
-        console.log(c);
+        console.log(data);
       })
       .catch((e) => {
         console.log(e);
@@ -77,7 +71,7 @@ export default class extends Controller {
         const newCount = parseInt(cnt) - 1;
         navbar.innerText = newCount;
         navbar.dataset.wishlistCount = newCount;
-        console.log(c);
+        console.log(data);
       })
       .catch((e) => {
         console.log(e);

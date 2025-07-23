@@ -36,7 +36,6 @@
           stroke-linejoin="round"
           data-controller="wishlist"
           data-action="click->wishlist#update"
-          data-user-login="true"
           data-wishlist-id="<%= current_user.wishlist.id %>"
           data-product-id="<%= product.id %>"
           data-status="<%= wishlist_item.present? %>"
@@ -45,6 +44,12 @@
           >
           <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
         </svg>
+      <% else %>
+        <%= link_to new_user_session_path do %>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+          </svg>
+        <%end%>
       <% end %>
     </div>
     <!-- Category -->
@@ -74,13 +79,33 @@
     </div>
     <!-- Add to Cart Button -->
     <div class="flex items-center space-x-3">
-      <%= button_to cart_items_path(product_id: product.id, quantity: 1), 
-            method: :post, 
-            class: "flex-1 bg-[#152420] text-white font-semibold py-3 px-6 rounded-xl hover:bg-[#152420] transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2" do %>
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01"></path>
-        </svg>
-        <span>Add to Cart</span>
+      <%if current_user%>
+        <span 
+          class="flex-1 bg-[#152420] cursor-pointer text-white font-semibold py-3 px-6 rounded-xl hover:bg-[#152420] transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
+          data-controller="cart"
+          data-action="click->cart#add"
+          data-cart-id="<%=current_user.cart.id%>"
+          data-product-id="<%=product.id%>"
+          >
+          Add to Cart
+        </span>
+      <% else %>
+        <%= link_to new_user_session_path, class: "flex-1 bg-[#152420] cursor-pointer text-white font-semibold py-3 px-6 rounded-xl hover:bg-[#152420] transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2", data: { controller: "cart" } do %>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+         class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+            d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 
+            14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 
+            2.1-4.684 2.924-7.138a60.114 60.114 0 0 
+            0-16.536-1.84M7.5 14.25 5.106 
+            5.272M6 20.25a.75.75 0 1 1-1.5 0 
+            .75.75 0 0 1 1.5 0Zm12.75 
+            0a.75.75 0 1 1-1.5 0 
+            .75.75 0 0 1 1.5 0Z" />
+          </svg>
+          <span>Add to Cart</span>
+        <% end %>
       <% end %>
       <!-- Quick View Button -->
       <%= link_to product_path(product), 

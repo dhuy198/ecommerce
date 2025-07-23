@@ -20,6 +20,9 @@ class User < ApplicationRecord
 
   def create_wishlist
     build_wishlist.save!
+  end
+
+  def create_cart
     build_cart.save!
   end
 end

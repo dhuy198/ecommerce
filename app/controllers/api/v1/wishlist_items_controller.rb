@@ -7,6 +7,7 @@ class Api::V1::WishlistItemsController < ApplicationController
         render json: wishlist_item, status: :ok
     end
 
+
     def destroy
         wishlist_item = current_user.wishlist.wishlist_items.find_by(id: params[:id])
         if wishlist_item.present?

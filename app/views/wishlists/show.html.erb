@@ -1,79 +1,72 @@
 <% content_for :title, "My Wishlist" %>
-<div class="bg-[#f4f9f9] min-h-screen py-8">
+<div class="bg-[#f4f9f9] min-h-screen py-12">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <!-- Wishlist Items -->
     <% if @wishlist_items.present? %>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <h1 class="text-3xl font-bold text-[#152420] mb-8 text-center">Your Wishlist</h1>
+      <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <% @wishlist_items.each do |wishlist_item| %>
-          <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200">
-            <!-- Product Image -->
+          <div class="group bg-white rounded-3xl shadow transition transform hover:shadow-xl hover:scale-[1.02] border border-gray-200 overflow-hidden flex flex-col">
+            <!-- Image -->
             <div class="relative">
               <% if wishlist_item.product.images.attached? %>
-                <%= image_tag wishlist_item.product.images.first, alt: wishlist_item.product.name, class: "w-full h-48 object-cover" %>
+                <%= image_tag wishlist_item.product.images.first, alt: wishlist_item.product.name, class: "w-full h-64 object-cover transition-all duration-300 group-hover:scale-105" %>
               <% else %>
-                <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
-                  <span class="text-gray-400">No image</span>
-                </div>
+                <div class="w-full h-52 bg-gray-100 flex items-center justify-center text-gray-400">No Image</div>
               <% end %>
-              <!-- Remove from wishlist button -->
-              <div class="absolute top-4 right-4">
-                <%= button_to wishlist_item_path(wishlist_item), 
-                    method: :delete, 
-                    class: "bg-white w-10 h-10 rounded-full shadow flex items-center justify-center hover:bg-red-50 transition-colors duration-200",
-                    data: { confirm: "Remove from wishlist?" } do %>
-                  <i class="fas fa-times text-red-500 text-sm"></i>
+              <!-- Remove Button -->
+              <div class="absolute top-3 right-3 z-10">
+                <%= button_to wishlist_item_path(wishlist_item),
+                    method: :delete,
+                    data: { confirm: "Remove from wishlist?" },
+                    class: "w-9 h-9 bg-white text-red-500 rounded-full shadow flex items-center justify-center hover:bg-red-100 transition" do %>
+                  <i class="fas fa-times text-sm"></i>
                 <% end %>
               </div>
             </div>
-            <!-- Product Info -->
-            <div class="p-4">
-              <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                <%= wishlist_item.product.name %>
-              </h3>
-              <p class="text-sm text-gray-500 mb-3">
-                <%= link_to wishlist_item.product.category.name, category_path(wishlist_item.product.category), class: "hover:text-gray-700" %>
-              </p>
-              <div class="flex items-center justify-between mb-4">
-                <span class="text-xl font-bold text-[#152420]">
-                  $<%= number_with_precision(wishlist_item.product.price, precision: 2) %>
-                </span>
-                <span class="text-sm text-gray-500">
-                  Stock: <%= wishlist_item.product.stock %>
-                </span>
+            <!-- Info -->
+            <div class="p-5 flex flex-col flex-1 justify-between">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-1 truncate">
+                  <%= wishlist_item.product.name %>
+                </h3>
+                <p class="text-sm text-gray-500 mb-3">
+                  <%= link_to wishlist_item.product.category.name, category_path(wishlist_item.product.category), class: "hover:underline" %>
+                </p>
               </div>
-              <!-- Action Buttons -->
-              <div class="flex gap-2">
-                <%= link_to product_path(wishlist_item.product), 
-                    class: "flex-1 bg-[#152420] text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-[#23403D] transition-colors duration-200 text-center" do %>
-                  <i class="fas fa-eye mr-2"></i>
-                  View Details
-                <% end %>
-                <button class="bg-green-600 text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-green-700 transition-colors duration-200">
-                  <i class="fas fa-shopping-cart mr-2"></i>
-                  Add to Cart
-                </button>
+              <div class="mt-auto">
+                <div class="flex justify-between items-center mb-4">
+                  <span class="text-xl font-bold text-[#152420]">$<%= number_with_precision(wishlist_item.product.price, precision: 2) %></span>
+                  <span class="text-xs text-gray-500">Stock: <%= wishlist_item.product.stock %></span>
+                </div>
+                <!-- Action Buttons -->
+                <div class="flex gap-2">
+                  <%= link_to product_path(wishlist_item.product),
+                      class: "flex-1 bg-[#152420] text-white text-sm font-medium py-2 px-3 rounded-lg hover:bg-[#23403D] transition-all text-center inline-flex items-center justify-center gap-1" do %>
+                    <i class="fas fa-eye"></i> View
+                  <% end %>
+                  <button class="flex-1 bg-green-600 text-white text-sm font-medium py-2 px-3 rounded-lg hover:bg-green-700 transition-all inline-flex items-center justify-center gap-1">
+                    <i class="fas fa-cart-plus"></i> Add
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         <% end %>
       </div>
     <% else %>
-      <!-- Empty Wishlist -->
-      <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
-        <div class="text-gray-400 mb-6">
-          <i class="fas fa-heart text-6xl"></i>
+      <!-- Empty State -->
+      <div class="bg-white rounded-3xl shadow-lg border border-gray-200 p-16 text-center max-w-3xl mx-auto">
+        <div class="text-gray-300 mb-6">
+          <i class="fas fa-heart text-7xl"></i>
         </div>
-        <h3 class="text-xl font-semibold text-[#152420] mb-3">Your wishlist is empty</h3>
+        <h2 class="text-3xl font-bold text-[#152420] mb-4">Your wishlist is empty</h2>
         <p class="text-gray-500 mb-8 max-w-md mx-auto">
-          Start adding products to your wishlist to keep track of items you love.
+          Start saving your favorite products to easily find them later.
         </p>
-        <div class="flex justify-center">
-          <%= link_to products_path, 
-              class: "inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#152420] hover:bg-[#23403D] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#152420] transition-colors duration-200" do %>
-            <i class="fas fa-shopping-bag mr-2"></i>
-            Browse Products
-          <% end %>
-        </div>
+        <%= link_to products_path,
+            class: "inline-flex items-center gap-2 px-6 py-3 bg-[#152420] text-white text-base font-semibold rounded-xl hover:bg-[#23403D] shadow-md hover:shadow-xl transition-all" do %>
+          <i class="fas fa-shopping-bag"></i> Browse Products
+        <% end %>
       </div>
     <% end %>
   </div>

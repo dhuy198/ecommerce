@@ -1,53 +1,42 @@
 <!-- Top Bar -->
-<div class="w-full  bg-[#152420] text-white h-[40px]" >
+<div class="w-full bg-[#152420] text-white h-[40px]">
   <div class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto px-4 py-2">
     <!-- Navigation Menu -->
     <nav class="flex gap-4 text-sm">
-      <%=link_to 'Showrooms', '#', class: 'hover:text-white text-[13px] text-[#E4EEF094]'%>
-      <%=link_to 'Custom Work', '#', class: 'hover:text-white text-[13px] text-[#E4EEF094]'%>
-      <%=link_to 'Gift Cards', '#', class: 'hover:text-white text-[13px] text-[#E4EEF094]'%>
+      <%= link_to 'Showrooms', '#', class: 'hover:text-white text-[13px] text-[#E4EEF094]' %>
+      <%= link_to 'Custom Work', '#', class: 'hover:text-white text-[13px] text-[#E4EEF094]' %>
+      <%= link_to 'Gift Cards', '#', class: 'hover:text-white text-[13px] text-[#E4EEF094]' %>
     </nav>
     <!-- Social Icons -->
     <div class="flex gap-4 text-white text-lg">
-      <%= link_to '#', aria: { label: 'Facebook' } do %>
-        <i class="text-[#E4EEF094] hover:text-white text-[14px] mr-[5px] fab fa-facebook-f"></i>
-      <% end %>
-      <%= link_to '#', aria: { label: 'Twitter' } do %>
-        <i class="text-[#E4EEF094] hover:text-white text-[14px] mr-[5px] fab fa-twitter"></i>
-      <% end %>
-      <%= link_to '#', aria: { label: 'Instagram' } do %>
-        <i class="text-[#E4EEF094] hover:text-white text-[14px] mr-[5px] fab fa-instagram"></i>
-      <% end %>
-      <%= link_to '#', aria: { label: 'YouTube' } do %>
-        <i class="text-[#E4EEF094] hover:text-white text-[14px] mr-[5px] fab fa-youtube"></i>
-      <% end %>
-      <%= link_to '#', aria: { label: 'WhatsApp' } do %>
-        <i class="text-[#E4EEF094] hover:text-white text-[14px] fab fa-whatsapp"></i>
+      <% ["facebook-f", "twitter", "instagram", "youtube", "whatsapp"].each do |icon| %>
+        <%= link_to "#", aria: { label: icon.capitalize } do %>
+          <i class="text-[#E4EEF094] hover:text-white text-[14px] mr-[5px] fab fa-<%= icon %>"></i>
+        <% end %>
       <% end %>
     </div>
   </div>
 </div>
-<!-- Second-->
-<div class="bg-white w-full ">
+<!-- Second Bar -->
+<div class="bg-white w-full">
   <div class="max-w-screen-xl mx-auto flex items-center justify-between px-4 py">
     <!-- Logo -->
-    <div class="flex items-center gap-1">
-      <%= link_to root_path, class: "flex items-center gap-2 text-xl font-semibold text-gray-800" do %>
-        <%= image_tag "logo.jpg", alt: "Furniture Logo", class: " w-auto max-h-[120px]" %>
-      <% end %>
-    </div>
+    <%= link_to root_path, class: "flex items-center gap-2 text-xl font-semibold text-gray-800" do %>
+      <%= image_tag "logo.jpg", alt: "Furniture Logo", class: "w-auto max-h-[120px]" %>
+    <% end %>
     <!-- Search bar -->
     <%= form_with url: products_path, method: :get, local: true, role: "search", class: "w-full max-w-md relative" do %>
       <%= hidden_field_tag :category_id, params[:category_id] %>
       <%= search_field_tag :query, params[:query],
-        placeholder: "Search",
-        class: "w-full pl-4 pr-10 py-2 rounded-full border border-gray-200 text-gray-700 placeholder-gray-400 shadow-md outline-none ring-2 ring-[#c6dfe2]" %>
+          placeholder: "Search",
+          class: "w-full pl-4 pr-10 py-2 rounded-full border border-gray-200 text-gray-700 placeholder-gray-400 shadow-md outline-none ring-2 ring-[#c6dfe2]" %>
       <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
         <i class="fas fa-search"></i>
       </button>
     <% end %>
     <!-- Navigation + Icons -->
     <div class="flex items-center text-gray-700 text-sm">
+      <!-- Menu -->
       <nav class="hidden md:flex items-center gap-6 mr-[60px]">
         <%= link_to "Home", root_path, class: "hover:text-primary py-[50px]" %>
         <%= link_to "Shop", products_path, class: "hover:text-primary relative group py-[50px]" %>
@@ -63,11 +52,10 @@
           <!-- Dropdown Menu -->
           <div class="hidden absolute left-1/2 -translate-x-1/2 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 transition-all duration-200 z-50" data-dropdown-target="menu">
             <% if user_signed_in? %>
-              <!-- Logged in user options -->
+              <!-- Logged in user -->
               <div class="py-1">
                 <p class="text-gray-700 text-sm px-4 py-2 break-words">
-                  Hello,
-                  <%= current_user.name %>
+                  Hello, <%= current_user.name %>
                 </p>
                 <%= link_to edit_user_registration_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2" do %>
                   <i class="fas fa-user-edit text-gray-500"></i>
@@ -82,10 +70,10 @@
                     <i class="fas fa-cog text-gray-500"></i>
                     Admin Dashboard
                   <% end %>
-                <%end%>
+                <% end %>
               </div>
             <% else %>
-              <!-- Guest user options -->
+              <!-- Guest -->
               <div class="py-1">
                 <%= link_to new_user_session_path, id: "login", class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2" do %>
                   <i class="fas fa-sign-in-alt text-gray-500"></i>
@@ -99,31 +87,51 @@
             <% end %>
           </div>
         </div>
-        <%= link_to wishlist_path(), aria: { label: "Wishlist" },class: 'mr-3' do %>
-          <i class="far fa-heart relative">
-            <span 
-              class="absolute top-[-10px] right-[-10px] bg-[#274C4F] text-white text-[8px] rounded-full px-[5px] py-[3px]"
-              id="wishlistCount" 
-              data-controller="wishlist"
-              data-wishlist-target="text"
-              data-wishlist-count="<%= current_user&.wishlist&.wishlist_items&.count || 0 %>"
-            >
-              <%= current_user&.wishlist&.wishlist_items&.count || 0 %>
-            </span>
-          </i>
-        </div>
-        <%= link_to cart_path, class: "relative", aria: { label: "Cart" } do %>
-          <div class="relative w-6 h-6">
-            <%= image_tag 'cart.png' %>
-            <% if user_signed_in? && current_user.cart.cart_items.present?%>
-              <span class="absolute top-[-5px] right-[-5px] bg-[#274C4F] text-white text-[10px] rounded-full px-[5px] py-[1px]">
-                <%= current_user.cart.cart_items.uniq.count %>
+        <!-- Wishlist -->
+        <% if user_signed_in? %>
+          <%= link_to wishlist_path, aria: { label: "Wishlist" }, class: 'mr-3' do %>
+            <i class="far fa-heart relative">
+              <span 
+                class="absolute top-[-10px] right-[-10px] bg-[#274C4F] text-white text-[8px] rounded-full px-[5px] py-[3px]"
+                id="wishlistCount" 
+                data-controller="wishlist"
+                data-wishlist-target="text"
+                data-wishlist-count="<%= current_user.wishlist&.wishlist_items&.count || 0 %>"
+              >
+                <%= current_user.wishlist&.wishlist_items&.count || 0 %>
               </span>
-            <% end %>
-          </div>
+            </i>
+          <% end %>
+        <% else %>
+          <%= link_to new_user_session_path, aria: { label: "Wishlist" }, class: 'mr-3' do %>
+            <i class="far fa-heart relative">
+            </i>
+          <% end %>
         <% end %>
-      <% end %>
+        <!-- Cart -->
+        <% if user_signed_in? %>
+          <%= link_to cart_path, class: "relative", aria: { label: "Cart" } do %>
+            <div class="relative w-6 h-6">
+              <%= image_tag 'cart.png' %>
+              <span 
+                class="absolute top-[-5px] right-[-5px] bg-[#274C4F] text-white text-[10px] rounded-full px-[5px] py-[1px]"
+                id="cartCount" 
+                data-controller="cart"
+                data-cart-target="text"
+                data-cart-count="<%= current_user.cart&.cart_items&.uniq&.count || 0 %>"
+              >
+                <%= current_user.cart&.cart_items&.uniq&.count || 0 %>
+              </span>
+            </div>
+          <% end %>
+        <% else %>
+          <%= link_to cart_path, class: "relative", aria: { label: "Cart" } do %>
+            <div class="relative w-6 h-6">
+              <%= image_tag 'cart.png' %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
 </div>
