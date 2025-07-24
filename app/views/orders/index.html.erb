@@ -1,0 +1,53 @@
+<% content_for :title, "Lịch sử đơn hàng" %>
+<div class="bg-[#f9fafb] min-h-screen py-10">
+  <div class="max-w-4xl mx-auto px-6">
+    <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">Order List</h1>
+    <% if @orders.any? %>
+      <% @orders.each do |order| %>
+        <div class="bg-white border border-gray-200 shadow-md rounded-xl mb-8 p-6">
+          <div class="grid md:grid-cols-2 gap-4 mb-4 text-gray-700">
+            <%= link_to order_path(order) do %>
+              <div class= "underline"><strong> Order detail:</strong> <%= order.id %></div>
+            <%end%>
+            <div><strong>Order date:</strong> <%= order.created_at.strftime("%d/%m/%Y %H:%M") %></div>
+            <div><strong>Total:</strong> <span class="text-teal-600 font-semibold">$<%= order.total %></span></div>
+            <div><strong>Status:</strong>
+              <span class="inline-block px-3 py-1 text-sm rounded-full bg-<%= order.status == 'completed' ? 'green' : 'yellow' %>-100 text-<%= order.status == 'completed' ? 'green' : 'yellow' %>-700">
+                <%= order.status.titleize %>
+              </span>
+            </div>
+          </div>
+          <div>
+            <h2 class="text-md font-semibold text-gray-800 mb-2">Product</h2>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm text-left text-gray-600 border">
+                <thead class="bg-gray-100 text-gray-700 uppercase">
+                  <tr>
+                    <th class="px-4 py-2">Product</th>
+                    <th class="px-4 py-2">Quantity</th>
+                    <th class="px-4 py-2">Price</th>
+                    <th class="px-4 py-2">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% order.order_items.each do |item| %>
+                    <tr class="border-t">
+                      <td class="px-4 py-2"><%= item.product.name %></td>
+                      <td class="px-4 py-2">x<%= item.quantity %></td>
+                      <td class="px-4 py-2">$<%= item.price %></td>
+                      <td class="px-4 py-2 font-semibold text-teal-700">$<%= item.price * item.quantity %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="bg-white shadow-md rounded-xl p-6 text-center text-gray-600">
+        Bạn chưa có đơn hàng nào.
+      </div>
+    <% end %>
+  </div>
+</div>

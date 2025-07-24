@@ -5,7 +5,10 @@ class Product < ApplicationRecord
   has_many :cart_items, dependent: :destroy
   has_many :carts, through: :cart_items
   has_many :reviews, dependent: :destroy
+  has_many :order_items, dependent: :destroy
+  has_many :orders, through: :order_items
 
+  
   validates :name, :description, :category_id, presence: true
   validates :price, presence: true, numericality: {
     greater_than: 0

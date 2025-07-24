@@ -16,8 +16,7 @@ Category.create!([
   { name: "Decor"}
 ])
 
-User.create!(email: "user@example.com", password: "123456", name: "user")
-User.create!(email: "admin@example.com", password: "123456", name: "admin", role: "admin")
+user = User.create!(email: "user@example.com", password: "123456", name: "user", address: "Hanoi Vietnam")
 
 chair_category = Category.find_by(name: "Chair")
 2.times do |i| 
@@ -96,3 +95,5 @@ bed_category = Category.find_by(name: "Bed")
   bed.images.attach(io: File.open("db/image/bed/bed#{i+1}_3.webp"), filename: bed.name)
   bed.images.attach(io: File.open("db/image/bed/bed#{i+1}_4.webp"), filename: bed.name)
 end
+
+user.cart.cart_items.create!(cart_id: user.cart.id, product_id: "3", quantity: 1)

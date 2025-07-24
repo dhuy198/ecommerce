@@ -35,6 +35,7 @@
                 <% end %>
               </div>
             </div>
+            <%= stripe_elements_tag submit_path: user_session_path%>
           <% end %>
         </div>
         <!-- Continue Shopping -->
@@ -59,21 +60,15 @@
         <span>Total</span>
         <span>$<%= '%.2f' % @cart.cart_items.sum { |item| item.product.price * item.quantity } %></span>
       </div>
-      <% target = 2000.0 %>
-      <% current_total = @cart.cart_items.sum { |item| item.product.price * item.quantity } %>
-      <% remaining = target - current_total %>
-      <% progress = [100, (current_total / target * 100).to_i].min %>
-      <div class="mb-6 text-sm text-gray-600">
-        <% if remaining > 0 %>
-          Add <span class="font-medium text-gray-800">$<%= '%.2f' % remaining %></span> more to get free shipping!
-        <% else %>
-          <span class="text-green-700 font-medium">You have free shipping!</span>
-        <% end %>
-        <div class="w-full h-2 bg-gray-200 mt-3 rounded-full overflow-hidden">
-          <div class="h-full bg-teal-700 rounded-full transition-all duration-300" style="width: <%= progress %>%"></div>
-        </div>
-      </div>
-      <%= link_to "Proceed to checkout", '#', class: "block w-full bg-teal-700 hover:bg-teal-800 text-white text-center py-3 rounded-full font-semibold text-sm transition" %>
+      <!--
+      <button 
+        data-controller="checkout" 
+        data-user-id="<%= current_user.id %>" 
+        data-action="click->checkout#pay"
+        class="block w-full bg-teal-700 hover:bg-teal-800 text-white text-center py-3 rounded-full font-semibold text-sm transition">
+        Checkout
+      </button>
+      -->
     </div>
   </div>
 </div>
