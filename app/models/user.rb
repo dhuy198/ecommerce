@@ -11,7 +11,7 @@ class User < ApplicationRecord
   
   after_create :create_wishlist, :create_cart
 
-  enum :role, { user: 0, admin: 1 }
+  enum :role, { user: 0}
   after_initialize :set_default_role, if: :new_record?
 
   private
