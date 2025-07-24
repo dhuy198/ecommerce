@@ -5,16 +5,12 @@ Rails.application.routes.draw do
     registrations: "user/registrations",
     passwords: "user/passwords"
   }
+  get "home", to: "pages#home"
+  get "about", to: "pages#about"
   resources :products do 
     resources :reviews 
   end
   resources :categories
-  get "home", to: "pages#home"
-  get "about", to: "pages#about"
-
-
-
-
   resource :wishlist, only: [ :show ]
   resources :wishlist_items, only: [ :create, :destroy ]
   resource :cart
@@ -30,6 +26,13 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :admin do 
+    resources :users
+    resources :orders 
+    resources :categories
+    resources :products
+    resources :reviews
+  end
   namespace :api do 
     namespace :v1 do 
       resources :wishlist_items, only: [:create, :destroy]
