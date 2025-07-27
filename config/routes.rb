@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   resource :wishlist, only: [ :show ]
   resources :wishlist_items, only: [ :create, :destroy ]
   resource :cart
-  resources :orders, only: [:index, :show]
+  resources :orders
   resource :payments, only: [:create]
   
   resources :cart_items, only: [ :create, :destroy ] do
@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'payments/success', to: 'payments#success'
   namespace :admin do 
     resources :users
     resources :orders 

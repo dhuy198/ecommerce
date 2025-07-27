@@ -12,7 +12,7 @@
             <div><strong>Order date:</strong> <%= order.created_at.strftime("%d/%m/%Y %H:%M") %></div>
             <div><strong>Total:</strong> <span class="text-teal-600 font-semibold">$<%= order.total %></span></div>
             <div><strong>Status:</strong>
-              <span class="inline-block px-3 py-1 text-sm rounded-full bg-<%= order.status == 'completed' ? 'green' : 'yellow' %>-100 text-<%= order.status == 'completed' ? 'green' : 'yellow' %>-700">
+              <span class="inline-block px-3 py-1 text-sm rounded-full bg-<%= order.status == 'paid' ? 'green' : 'yellow' %>-100 text-<%= order.status == 'paid' ? 'green' : 'yellow' %>-700">
                 <%= order.status.titleize %>
               </span>
             </div>
