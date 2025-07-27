@@ -1,23 +1,22 @@
 Rails.application.routes.draw do
+  devise_for :admins
   devise_for :users, controllers: {
     sessions: "user/sessions",
     registrations: "user/registrations",
     passwords: "user/passwords"
   }
-  resources :products
-  resources :categories
   get "home", to: "pages#home"
   get "about", to: "pages#about"
-
-  authenticate :user, ->(user) { user.admin? } do
-    namespace :admin do
-      get "dashboard", to: "dashboard#index"
-    end
+  resources :products do 
+    resources :reviews 
   end
-
+  resources :categories
   resource :wishlist, only: [ :show ]
   resources :wishlist_items, only: [ :create, :destroy ]
   resource :cart
+  resources :orders
+  resource :payments, only: [:create]
+  
   resources :cart_items, only: [ :create, :destroy ] do
     scope :cart_item do
       member do
@@ -25,6 +24,22 @@ Rails.application.routes.draw do
         patch :decrease
       end
     end
+  end
+
+  get 'payments/success', to: 'payments#success'
+  namespace :admin do 
+    resources :users
+    resources :orders 
+    resources :categories
+    resources :products
+    resources :reviews
+  end
+  namespace :api do 
+    namespace :v1 do 
+      resources :wishlist_items, only: [:create, :destroy]
+      resources :cart_items, only: [:create, :destroy]
+      resources :orders, only: [:create]
+    end 
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

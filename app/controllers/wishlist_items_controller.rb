@@ -19,12 +19,6 @@ class WishlistItemsController < ApplicationController
 
   def destroy
     @wishlist = current_user.wishlist
-
-    unless @wishlist
-      redirect_back(fallback_location: root_path, alert: "Wishlist not found")
-      return
-    end
-
     @wishlist_item = @wishlist.wishlist_items.find(params[:id])
 
     if @wishlist_item.present?

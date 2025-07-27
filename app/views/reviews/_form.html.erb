@@ -1,0 +1,29 @@
+<div class="mx-auto container my-10">
+  <h1 class="text-2xl sm:text-3xl font-bold mb-6 text-center flex items-center justify-center gap-2">
+    Add a review
+  </h1>
+  <%= form_with model: [@product, @product.reviews.build], local: true, class: "space-y-6" do |form| %>
+    <% if @review && @review.errors.any? %>
+      <div class="bg-red-100 border border-red-300 text-red-800 px-4 py-3 rounded-lg mb-4">
+        <h2 class="font-bold mb-2">Please correct the following errors:</h2>
+        <ul class="list-disc list-inside space-y-1">
+          <% @review.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div>
+      <%= form.label :comment, class: "block text-lg font-semibold mb-2 text-gray-700" %>
+      <%= form.text_area :comment, rows: 4, class: "form-textarea w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 transition" %>
+    </div>
+    <div>
+      <%= form.label :star, class: "block text-lg font-semibold mb-2 text-gray-700" %>
+      <%= form.number_field :star, in: 1..5, class: "form-input w-24 border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition" %>
+      <span class="ml-2 text-yellow-500 text-lg">★</span>
+    </div>
+    <div class="flex justify-end">
+      <%= form.submit "Post Review", class: 'bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded-xl shadow-lg transition duration-150' %>
+    </div>
+  <% end %>
+</div>

@@ -1,43 +1,136 @@
-<% if notice %>
-  <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-    <%= notice %>
-  </div>
-<% end %>
-<% content_for :title, @product.name %>
-<div class="bg-[#f4f9f9] min-h-screen py-8">
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-      <div class="flex items-center justify-between mb-6">
-        <div>
-          <%= image_tag @product.image, class: "w-full h-48 object-cover rounded-lg mb-4" if @product.image.attached? %>
-          <h1 class="text-3xl font-bold text-[#152420] mb-2"><%= @product.name %></h1>
-          <div class="flex items-center gap-2 mb-2">
-            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-              $<%= number_with_precision(@product.price, precision: 2) %>
-            </span>
-            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-              Stock: <%= @product.stock %>
-            </span>
+<div class="bg-white">
+  <div class="pt-6">
+    <nav aria-label="Breadcrumb">
+      <ol role="list" class="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+        <li>
+          <div class="flex items-center">
+            <%= link_to 'Home', home_path, class: "mr-2 text-sm font-medium text-gray-900"%>
+            <svg viewBox="0 0 16 20" width="16" height="20" fill="currentColor" aria-hidden="true" class="h-5 w-4 text-gray-300">
+              <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
+            </svg>
           </div>
-          <div class="text-xs text-gray-400 mb-2">
-            Category: <%= @product.category&.name || "N/A" %>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <%= link_to @product.category.name, category_path, class: "mr-2 text-sm font-medium text-gray-900"%>
+            <svg viewBox="0 0 16 20" width="16" height="20" fill="currentColor" aria-hidden="true" class="h-5 w-4 text-gray-300">
+              <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
+            </svg>
           </div>
-        </div>
-        <div class="bg-[#152420] rounded-full p-3">
-          <i class="fas fa-box text-white text-lg"></i>
-        </div>
-      </div>
-      <div class="mb-8">
-        <h2 class="text-lg font-semibold text-gray-800 mb-2">Description</h2>
-        <p class="text-gray-600"><%= @product.description %></p>
-      </div>
-      <div class="flex flex-col sm:flex-row gap-4">
-        <%= link_to  products_path, 
-            class: "flex-1 sm:flex-none inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#152420] transition-colors duration-200" do %>
-          <i class="fas fa-arrow-left mr-2"></i>
-          Back to Products
+        </li>
+        <li class="text-sm">
+          <span class = 'mr-2 text-sm font-medium text-gray-600'>
+            <%= @product.name%>
+          </span>
+        </li>
+      </ol>
+    </nav>
+    <!-- Image gallery -->
+    <% if @product.images.attached? %>
+      <div class="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-8 lg:px-8">
+        <% @product.images.each_with_index do |image, index| %>
+          <% case index %>
+          <% when 0 %>
+            <%= image_tag image, class: "row-span-2 aspect-3/4 size-full rounded-lg object-scale-down max-lg:hidden" %>
+          <% when 1 %>
+            <%= image_tag image, class: "col-start-2 aspect-3/2 size-full rounded-lg object-scale-down max-lg:hidden" %>
+          <% when 2 %>
+            <%= image_tag image, class: "col-start-2 row-start-2 aspect-3/2 size-full rounded-lg object-scale-down max-lg:hidden" %>
+          <% when 3 %>
+            <%= image_tag image, class: "row-span-2 aspect-4/5 size-full object-scale-down sm:rounded-lg lg:aspect-3/4" %>
+          <% else %>
+            <%= image_tag image, alt: "Ảnh thêm", class: "aspect-square size-full rounded-lg object-scale-down" %>
+          <% end %>
         <% end %>
       </div>
+    <% end %>
+    <!-- Product info -->
+    <div class="mx-auto max-w-2xl px-4 pt-10 pb-16 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto_auto_1fr] lg:gap-x-8 lg:px-8 lg:pt-16 lg:pb-24">
+      <div class="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+        <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl"><%=@product.name%></h1>
+      </div>
+      <!-- Options -->
+      <div class="mt-4 lg:row-span-3 lg:mt-0">
+        <p class="text-3xl tracking-tight text-gray-900">$<%=@product.price%></p>
+        <!-- Reviews -->
+        <div class="mt-6">
+          <h3 class="sr-only">Reviews</h3>
+          <div class="flex items-center">
+            <div class="flex items-center">
+              <!-- Active: "text-gray-900", Default: "text-gray-200" -->
+              <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5 shrink-0 text-gray-900">
+                <path d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" fill-rule="evenodd" />
+              </svg>
+              <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5 shrink-0 text-gray-900">
+                <path d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" fill-rule="evenodd" />
+              </svg>
+              <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5 shrink-0 text-gray-900">
+                <path d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" fill-rule="evenodd" />
+              </svg>
+              <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5 shrink-0 text-gray-900">
+                <path d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" fill-rule="evenodd" />
+              </svg>
+              <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5 shrink-0 text-gray-200">
+                <path d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" fill-rule="evenodd" />
+              </svg>
+            </div>
+            <p class="sr-only">4 out of 5 stars</p>
+            <span class="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500"><%=@product.reviews.count || 0%> reviews</a>
+          </div>
+        </div>
+        <form class="mt-10">
+          <button type="submit" class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden">Add to cart</button>
+        </form>
+      </div>
+      <div class="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pt-6 lg:pr-8 lg:pb-16">
+        <!-- Description-->
+        <div>
+          <h3 class="sr-only">Description</h3>
+          <div class="space-y-6">
+            <%= @product.description%>
+          </div>
+        </div>
+      </div>
     </div>
+    <br>
+    <!--reviews-->
+    <div class="bg-white p-6 rounded-xl shadow-md container mx-auto mb-10">
+      <h2 class="text-xl font-semibold mb-6 pb-2 flex">Recent reviews</h2>
+      <% if @product.reviews.present?%>
+        <% @product.reviews.each do |review| %>
+          <turbo-frame id="review_<%= review.id %>">
+            <div class="flex flex-col sm:flex-row sm:items-start py-6 last-0 gap-4">
+              <!-- Left section: User Info -->
+              <div class="w-full sm:w-1/4">
+                <p class="font-semibold text-gray-900"><%= review.user.name %></p>
+                <p class="text-sm text-gray-500"><%= review.created_at.strftime("%B %-d, %Y") %></p>
+                <div class="flex items-center mt-2">
+                  <span class="ml-1 text-sm text-gray-700"><%= review.star %> / 5</span>
+                  <svg class="h-4 w-4 text-yellow-400 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.1 3.382a1 1 0 00.95.69h3.564c.969 0 1.371 1.24.588 1.81l-2.883 2.095a1 1 0 00-.364 1.118l1.1 3.382c.3.921-.755 1.688-1.538 1.118l-2.882-2.095a1 1 0 00-1.176 0l-2.882 2.095c-.783.57-1.838-.197-1.539-1.118l1.101-3.382a1 1 0 00-.364-1.118L2.848 8.809c-.783-.57-.38-1.81.588-1.81h3.564a1 1 0 00.951-.69l1.098-3.382z"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="sm:w-3/4 space-y-2 inline-block">
+                <h3 class="text-gray-800"><%= review.comment %></h3>
+                <% if user_signed_in? && current_user == review.user %>
+                  <div class="flex gap-2 mt-2">
+                    <turbo-frame id="review_<%= review.id %>">
+                      <%= link_to 'Chỉnh sửa', edit_product_review_path(@product, review), data: { turbo_frame: "review_#{review.id}" }, class: "px-3 py-1 bg-yellow-400 hover:bg-yellow-500 text-white rounded-lg text-sm font-semibold transition" %>
+                    </turbo-frame>
+                    <%= button_to 'Xóa', product_review_path(@product, review), method: :delete, data: { confirm: "Bạn có chắc muốn xóa review này?" }, class: "px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-semibold transition" %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </turbo-frame>
+          <!-- Review Content -->
+        <%end%>
+      <%end%>
+    </div>
+    <!-- form -->
+    <%if user_signed_in?%>
+      <%= render 'reviews/form', product: @product %>
+    <%end%>
   </div>
 </div>
