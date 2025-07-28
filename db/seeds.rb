@@ -16,7 +16,8 @@ Category.create!([
   { name: "Decor"}
 ])
 
-user = User.create!(email: "user@example.com", password: "123456", name: "user", address: "Hanoi Vietnam")
+user = User.create!(email: "1@example.com", password: "123456", name: "1", address: "Hanoi Vietnam")
+user = User.create!(email: "2@example.com", password: "123456", name: "2", address: "Ho Chi Minh Vietnam")
 
 chair_category = Category.find_by(name: "Chair")
 2.times do |i| 

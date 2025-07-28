@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resource :cart
   resources :orders
   resource :payments, only: [:create]
+  resource :shipping_information, only: [:create, :update]
   
   resources :cart_items, only: [ :create, :destroy ] do
     scope :cart_item do
@@ -37,7 +38,12 @@ Rails.application.routes.draw do
   namespace :api do 
     namespace :v1 do 
       resources :wishlist_items, only: [:create, :destroy]
-      resources :cart_items, only: [:create, :destroy]
+      resources :cart_items, only: [:create, :destroy] do 
+        member do
+          patch :increase
+          patch :decrease
+        end
+      end
       resources :orders, only: [:create]
     end 
   end

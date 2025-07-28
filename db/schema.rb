@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_27_163412) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_28_030324) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -93,9 +93,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_27_163412) do
   create_table "orders", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.decimal "total"
-    t.string "status"
+    t.string "payment_status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "deliverd_status"
+    t.string "payment_method"
+    t.string "shipping_address"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -120,6 +123,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_27_163412) do
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_reviews_on_product_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
+  create_table "shipping_informations", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "full_name"
+    t.string "phone_number"
+    t.text "address"
+    t.string "city"
+    t.string "district"
+    t.string "postal_code"
+    t.string "country"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_shipping_informations_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -168,6 +185,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_27_163412) do
   add_foreign_key "products", "categories"
   add_foreign_key "reviews", "products"
   add_foreign_key "reviews", "users"
+  add_foreign_key "shipping_informations", "users"
   add_foreign_key "wishlist_items", "products"
   add_foreign_key "wishlist_items", "wishlists"
   add_foreign_key "wishlists", "users"

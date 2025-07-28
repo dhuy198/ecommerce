@@ -1,11 +1,13 @@
 class PaymentsController < ApplicationController
+    before_action :set_hide_navbar
+
     def create
         cart = Cart.find(payments_params[:cart_id])
         line_items = cart.cart_items.map do |item|
             {
             price_data: {
                 currency: 'usd',
-                unit_amount: (item.product.price * 100).to_i, # Stripe dùng cent
+                unit_amount: (item.product.price * 100).to_i,
                 product_data: {
                 name: item.product.name
                 }
@@ -20,7 +22,6 @@ class PaymentsController < ApplicationController
             mode: 'payment',
             customer: stripe_customer.id,
             success_url: success_url,
-
             # cancel_url: 
         })
         redirect_to session.url, allow_other_host: true, status:303
@@ -45,12 +46,15 @@ class PaymentsController < ApplicationController
     def success
         cart = current_user.cart
         if cart.cart_items.empty?
-            return render json: { error: "Empty order" }, status: :unprocessable_entity
+            return render json: { error: "Empty order" }, payment_status: :unprocessable_entity
         end
 
         order = current_user.orders.create!(
             total: 0,
-            status: "paid"
+            payment_status: "paid",
+            deliverd_status: "pending",
+            payment_method: "cart",
+            shipping_address: current_user.address,
         )
 
         total = 0
@@ -68,7 +72,6 @@ class PaymentsController < ApplicationController
 
         order.update!(total: total)
         cart.cart_items.destroy_all
-
     end
 
     private 
@@ -77,7 +80,11 @@ class PaymentsController < ApplicationController
             :stripeToken,
             :cart_id,
             :user_id,
-            :total
+            :total,
         )
+    end
+
+    def set_hide_navbar
+        @hide = true
     end
 end

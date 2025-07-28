@@ -8,5 +8,6 @@ class CartsController < ApplicationController
     @cart.cart_items.each do |item|
       @total += item.product.price * item.quantity
     end
+    @shipping_information = current_user.shipping_information || current_user.build_shipping_information
   end
 end

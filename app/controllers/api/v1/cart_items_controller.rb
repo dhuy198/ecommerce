@@ -25,6 +25,32 @@ class Api::V1::CartItemsController < ApplicationController
         end
     end
 
+    def increase
+        cart_item = current_user.cart.cart_items.find(params[:id])
+        cart_item.update!(quantity: cart_item.quantity + 1)
+        render json: {
+            cart_item_quantity: cart_item.quantity
+        }, status: :ok   
+    end
+
+    def decrease
+        cart_item = current_user.cart.cart_items.find(params[:id])
+        if cart_item.quantity > 1
+            cart_item.update!(quantity: cart_item.quantity - 1)
+        else
+            if @cart_item.destroy
+                render json: { removed: true }
+            else
+                Rails.logger.error("CartItem ID=#{@cart_item.id} could not be destroyed")
+                render json: { error: "Delete failed" }, status: :internal_server_error
+            end
+        end
+        render json: {
+            cart_item_quantity: cart_item.quantity
+        }, status: :ok  
+    end
+
+
     private
 
     def cart_items_params
