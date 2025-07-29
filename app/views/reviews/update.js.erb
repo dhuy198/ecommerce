@@ -1,0 +1,9 @@
+<% if @shipping_information.errors.any? %>
+  document.querySelector("#modal-errors").innerHTML = `<%= j render 'shared/form_errors', object: @shipping_information %>`;
+<% else %>
+  const dialog = document.querySelector("el-dialog");
+  if (dialog) {
+  dialog.__vue__.visible = false;
+  }
+  location.reload();
+<% end %>

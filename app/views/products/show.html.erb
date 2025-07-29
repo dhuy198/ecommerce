@@ -94,40 +94,8 @@
     </div>
     <br>
     <!--reviews-->
-    <div class="bg-white p-6 rounded-xl shadow-md container mx-auto mb-10">
-      <h2 class="text-xl font-semibold mb-6 pb-2 flex">Recent reviews</h2>
-      <% if @product.reviews.present?%>
-        <% @product.reviews.each do |review| %>
-          <turbo-frame id="review_<%= review.id %>">
-            <div class="flex flex-col sm:flex-row sm:items-start py-6 last-0 gap-4">
-              <!-- Left section: User Info -->
-              <div class="w-full sm:w-1/4">
-                <p class="font-semibold text-gray-900"><%= review.user.name %></p>
-                <p class="text-sm text-gray-500"><%= review.created_at.strftime("%B %-d, %Y") %></p>
-                <div class="flex items-center mt-2">
-                  <span class="ml-1 text-sm text-gray-700"><%= review.star %> / 5</span>
-                  <svg class="h-4 w-4 text-yellow-400 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.1 3.382a1 1 0 00.95.69h3.564c.969 0 1.371 1.24.588 1.81l-2.883 2.095a1 1 0 00-.364 1.118l1.1 3.382c.3.921-.755 1.688-1.538 1.118l-2.882-2.095a1 1 0 00-1.176 0l-2.882 2.095c-.783.57-1.838-.197-1.539-1.118l1.101-3.382a1 1 0 00-.364-1.118L2.848 8.809c-.783-.57-.38-1.81.588-1.81h3.564a1 1 0 00.951-.69l1.098-3.382z"/>
-                  </svg>
-                </div>
-              </div>
-              <div class="sm:w-3/4 space-y-2 inline-block">
-                <h3 class="text-gray-800"><%= review.comment %></h3>
-                <% if user_signed_in? && current_user == review.user %>
-                  <div class="flex gap-2 mt-2">
-                    <turbo-frame id="review_<%= review.id %>">
-                      <%= link_to 'Chỉnh sửa', edit_product_review_path(@product, review), data: { turbo_frame: "review_#{review.id}" }, class: "px-3 py-1 bg-yellow-400 hover:bg-yellow-500 text-white rounded-lg text-sm font-semibold transition" %>
-                    </turbo-frame>
-                    <%= button_to 'Xóa', product_review_path(@product, review), method: :delete, data: { confirm: "Bạn có chắc muốn xóa review này?" }, class: "px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-semibold transition" %>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-          </turbo-frame>
-          <!-- Review Content -->
-        <%end%>
-      <%end%>
-    </div>
+    <%= render 'reviews/review', reviews: @reviews%>
+    <%= render 'pages/modal', reviews: @reviews%>
     <!-- form -->
     <%if user_signed_in?%>
       <%= render 'reviews/form', product: @product %>

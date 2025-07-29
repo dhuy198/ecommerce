@@ -44,6 +44,7 @@ Rails.application.routes.draw do
           patch :decrease
         end
       end
+      resource :shipping_information, only: [:create, :update]
       resources :orders, only: [:create]
     end 
   end

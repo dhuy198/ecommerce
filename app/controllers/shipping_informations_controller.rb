@@ -3,15 +3,32 @@ class ShippingInformationsController < ApplicationController
 
   def create
     @shipping_information = current_user.build_shipping_information(shipping_info_params)
+    @cart = current_user.cart
     if @shipping_information.save
-      redirect_to cart_path, notice: "Shipping info added."
+      respond_to do |format|
+        format.html { redirect_to cart_path }
+        format.js   
+      end
+    else
+      respond_to do |format|
+        format.html { render 'carts/show' }
+        format.js  
+      end
     end
   end
 
   def update
     @shipping_information = current_user.shipping_information
-    if @shipping_information.update(shipping_info_params)
-      redirect_to cart_path, notice: "Shipping info updated."
+    if @shipping_information.update(shipping_information_params)
+      respond_to do |format|
+        format.html { redirect_to cart_path }
+        format.js
+      end
+    else
+      respond_to do |format|
+        format.html { render 'carts/show' }
+        format.js
+      end
     end
   end
 

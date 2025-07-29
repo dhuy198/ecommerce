@@ -8,6 +8,7 @@ class ProductsController < ApplicationController
 
   # GET /products/1 or /products/1.json
   def show
+    @reviews = @product.reviews.includes(:user).order(created_at: :desc)
   end
 
   # GET /products/new

@@ -51,58 +51,98 @@
           <% end %>
         </div>
         <!-- Shipping Information -->
-        <div class="mt-10 bg-white border border-gray-200 rounded-xl shadow-sm p-6">
-          <h2 class="text-xl font-semibold text-gray-800 mb-4">Shipping Information</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-700">
-            <div>
-              <span class="font-medium text-gray-600">Address:</span>
-              <span class="mt-1"><%= current_user.address.presence || "N/A" %></span>
+        <div class=" my-10">
+          <div class="bg-white rounded-2xl shadow-lg p-8 w-full  mx-auto border border-gray-200">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Shipping Information</h2>
+            <% if @shipping_information.fully? %>
+              <div class="space-y-4 text-gray-700">
+                <div><strong>Full Name:</strong> <%= @shipping_information.full_name %></div>
+                <div><strong>Phone:</strong> <%= @shipping_information.phone_number %></div>
+                <div><strong>Address:</strong> <%= @shipping_information.address %>, <%= @shipping_information.district %>, <%= @shipping_information.city %>, <%= @shipping_information.country %></div>
+                <div><strong>Postal Code:</strong> <%= @shipping_information.postal_code %></div>
+              </div>
+              <div class="mt-6">
+                <%= render 'carts/modal', shipping_information: @shipping_information%>
+              </div>
+            <% else %>
+              <%= render 'carts/modal', shipping_information: @shipping_information%>
+            <% end %>
+          </div>
+          <!-- Payment -->
+          <div data-controller="payment" class="my-10 ">
+            <h1 class="text-xl font-semibold mb-4">Pay with</h1>
+            <div class="flex items-center space-x-6 bg-white rounded-2xl shadow-lg p-8 w-full border border-gray-200">
+              <div class="flex items-center space-x-2">
+                <input
+                  type="radio"
+                  name="payment_method"
+                  value="card"
+                  id="card"
+                  data-action="payment#toggle"
+                  class="w-5 h-5 text-[#23403D] focus:ring-[#23403D] border-gray-300"
+                  checked
+                >
+                  <label for="card" class="text-sm font-medium text-gray-700">Card</label>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    name="payment_method"
+                    value="cod"
+                    id="cod"
+                    data-action="payment#toggle"
+                    class="w-5 h-5 text-[#23403D] focus:ring-[#23403D] border-gray-300"
+                  >
+                    <label for="cod" class="text-sm font-medium text-gray-700">COD</label>
+                  </div>
+                </div>
+                <div class="mt-8 text-right <%= @shipping_information.persisted? ? '' : 'hidden' %>">
+                  <!-- cod -->
+                  <div data-payment-target="codForm" class="hidden">
+                    <button class="bg-[#23403D] hover:bg-[#2f5c57] text-white text-[16px] font-medium px-6 py-4 rounded-full transition duration-200"
+                      data-controller="order"
+                      data-action="click->order#make"
+                      data-user-id="<%= current_user.id%>"
+                      >
+                      Create Order
+                    </button>
+                  </div>
+                  <!--pay card-->
+                  <div data-payment-target="cardForm">
+                    <%= form_with url: payments_path(
+                    cart_id: @cart.id, 
+                    user_id: @current_user.id,
+                    total: @total
+                  ), method: :post do |form| %>
+                      <%= form.submit "Confirm and Pay", class: "bg-[#23403D] hover:bg-[#2f5c57] text-white text-[16px] font-medium px-6 py-4 rounded-full transition duration-200"%>
+                    <% end %>
+                  </div>
+                </div>
+                <!-- Continue Shopping -->
+                <div class="mt-8">
+                  <%= link_to "Continue shopping", products_path, class: "inline-block bg-white border border-gray-300 hover:border-gray-400 text-gray-700 px-6 py-2 rounded-full shadow-sm transition" %>
+                </div>
+              <% else %>
+                <div class="text-center text-gray-500 mt-6">
+                  <p>Your cart is empty.</p>
+                  <%= link_to "Continue shopping", products_path, class: "text-blue-500 hover:text-blue-600 underline" %>
+                </div>
+              <% end %>
             </div>
-            <div>
-              <span class="font-medium text-gray-600">City:</span>
-              <span class="mt-1"><%= current_user.city.presence || "N/A" %></span>
-            </div>
-            <div>
-              <span class="font-medium text-gray-600">State:</span>
-              <span class="mt-1"><%= current_user.state.presence || "N/A" %></span>
-            </div>
-            <div>
-              <span class="font-medium text-gray-600">Country:</span>
-              <span class="mt-1"><%= current_user.country.presence || "N/A" %></span>
-            </div>
+            <!-- Cart Totals -->
           </div>
         </div>
-        <!-- Payment -->
-        <div class="mt-8 text-right">
-          <%= form_with url: payments_path(
-              cart_id: @cart.id, 
-              user_id: @current_user.id,
-              total: @total
-            ), method: :post do |form| %>
-            <%= form.submit "Confirm and Pay", class: "bg-[#23403D] hover:bg-[#2f5c57] text-white text-[16px] font-medium px-6 py-4 rounded-full transition duration-200"%>
-          <% end %>
+        <div class="border border-gray-200 rounded-xl p-8 shadow-sm bg-white h-fit md:col-span-1 cols-span-1">
+          <h2 class="text-xl font-semibold mb-6 text-gray-800">Cart totals</h2>
+          <div class="flex justify-between mb-3 text-sm text-gray-600">
+            <span>Subtotal</span>
+            <span>$<%= '%.2f' % @cart.cart_items.sum { |item| item.product.price * item.quantity } %></span>
+          </div>
+          <div class="flex justify-between text-base font-bold text-gray-800 mb-6">
+            <span>Total</span>
+            <span>$<%= '%.2f' % @cart.cart_items.sum { |item| item.product.price * item.quantity } %></span>
+          </div>
         </div>
-        <!-- Continue Shopping -->
-        <div class="mt-8">
-          <%= link_to "Continue shopping", products_path, class: "inline-block bg-white border border-gray-300 hover:border-gray-400 text-gray-700 px-6 py-2 rounded-full shadow-sm transition" %>
-        </div>
-      <% else %>
-        <div class="text-center text-gray-500 mt-6">
-          <p>Your cart is empty.</p>
-          <%= link_to "Continue shopping", products_path, class: "text-blue-500 hover:text-blue-600 underline" %>
-        </div>
-      <% end %>
-    </div>
-    <!-- Cart Totals -->
-    <div class="border border-gray-200 rounded-xl p-8 shadow-sm bg-white h-fit">
-      <h2 class="text-xl font-semibold mb-6 text-gray-800">Cart totals</h2>
-      <div class="flex justify-between mb-3 text-sm text-gray-600">
-        <span>Subtotal</span>
-        <span>$<%= '%.2f' % @cart.cart_items.sum { |item| item.product.price * item.quantity } %></span>
-      </div>
-      <div class="flex justify-between text-base font-bold text-gray-800 mb-6">
-        <span>Total</span>
-        <span>$<%= '%.2f' % @cart.cart_items.sum { |item| item.product.price * item.quantity } %></span>
       </div>
     </div>
   </div>

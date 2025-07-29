@@ -16,8 +16,12 @@ Category.create!([
   { name: "Decor"}
 ])
 
-user = User.create!(email: "1@example.com", password: "123456", name: "1", address: "Hanoi Vietnam")
-user = User.create!(email: "2@example.com", password: "123456", name: "2", address: "Ho Chi Minh Vietnam")
+user1 = User.create!(email: "user1@example.com", password: "123456", name: "user1", address: "Hanoi Vietnam")
+user2= User.create!(email: "user2@example.com", password: "123456", name: "user2", address: "Ho Chi Minh Vietnam")
+user3 = User.create!(email: "user3@example.com", password: "123456", name: "user3", address: "Ho Chi Minh Vietnam")
+user4 = User.create!(email: "user4@example.com", password: "123456", name: "user4", address: "Ho Chi Minh Vietnam")
+user5 = User.create!(email: "user5@example.com", password: "123456", name: "user5", address: "Ho Chi Minh Vietnam")
+user6 = User.create!(email: "user6@example.com", password: "123456", name: "user6", address: "Ho Chi Minh Vietnam")
 
 chair_category = Category.find_by(name: "Chair")
 2.times do |i| 
@@ -36,7 +40,12 @@ chair_category = Category.find_by(name: "Chair")
   chair.images.attach(io: File.open("db/image/chair/chair#{i+1}_3.webp"), filename: chair.name)
   chair.images.attach(io: File.open("db/image/chair/chair#{i+1}_4.webp"), filename: chair.name)
   chair.images.attach(io: File.open("db/image/chair/chair#{i+1}_5.webp"), filename: chair.name)
-  chair.reviews.create!(user: User.first, star: 5, comment: "Test chair review")
+  chair.reviews.create!(user: user1, star: 5, comment: "Chair review by user 1")
+  chair.reviews.create!(user: user2, star: 4, comment: "Chair review by user 2")
+  chair.reviews.create!(user: user3, star: 3, comment: "Chair review by user 3")
+  chair.reviews.create!(user: user4, star: 2, comment: "Chair review by user 4")
+  chair.reviews.create!(user: user5, star: 1, comment: "Chair review by user 5")
+  chair.reviews.create!(user: user6, star: 5, comment: "Chair review by user 6")
 
 end
 
@@ -56,7 +65,7 @@ table_category = Category.find_by(name: "Table")
   table.images.attach(io: File.open("db/image/table/table#{i+1}_2.webp"), filename: table.name)
   table.images.attach(io: File.open("db/image/table/table#{i+1}_3.webp"), filename: table.name)
   table.images.attach(io: File.open("db/image/table/table#{i+1}_4.webp"), filename: table.name)
-  table.reviews.create!(user: User.first, star: 4, comment: "Test table review Test table review Test table review Test table review Test table review Test table review Test table review Test table review ")
+  
 
 end
 
@@ -97,4 +106,3 @@ bed_category = Category.find_by(name: "Bed")
   bed.images.attach(io: File.open("db/image/bed/bed#{i+1}_4.webp"), filename: bed.name)
 end
 
-user.cart.cart_items.create!(cart_id: user.cart.id, product_id: "3", quantity: 1)
