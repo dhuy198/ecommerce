@@ -1,0 +1,37 @@
+<%= form_with model: [:admin, user], local: true, class: "space-y-4" do |f| %>
+  <% if user.errors.any? %>
+    <div class="bg-red-100 text-red-700 px-4 py-2 rounded">
+      <strong>Errors:</strong>
+      <ul class="list-disc pl-4">
+        <% user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div>
+    <%= f.label :name, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :name, class: "mt-1 w-full border rounded px-3 py-2" %>
+  </div>
+  <div>
+    <%= f.label :email, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.email_field :email, class: "mt-1 w-full border rounded px-3 py-2" %>
+  </div>
+  <div>
+    <%= f.label :address, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :address, class: "mt-1 w-full border rounded px-3 py-2" %>
+  </div>
+  <div>
+    <%= f.label :city, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :city, class: "mt-1 w-full border rounded px-3 py-2" %>
+  </div>
+  <div>
+    <%= f.label :state, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :state, class: "mt-1 w-full border rounded px-3 py-2" %>
+  </div>
+  <div>
+    <%= f.label :country, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :country, class: "mt-1 w-full border rounded px-3 py-2" %>
+  </div>
+  <%= f.submit "Update", class: "bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded" %>
+<% end %>
