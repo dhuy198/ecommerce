@@ -1,5 +1,5 @@
 <!-- Nút mở modal -->
-<% if shipping_information.persisted?%>
+<% if shipping_information.present?%>
   <button command="show-modal" commandfor="dialog" class="bg-[#23403D] hover:bg-[#2f5c57] text-white text-[16px] font-medium px-4 py-2 rounded-full transition duration-200">
     Edit Address
   </button>
@@ -32,7 +32,7 @@
           <!-- BEGIN: Form -->
           <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
             <h1 id="dialog-title" class="text-xl font-bold mb-4 text-gray-900">Shipping Address</h1>
-            <%= render "shipping_informations/form"%>
+            <%= render "shipping_informations/form", shipping_information: current_user.shipping_information%>
           </div>
           <!-- END: Form -->
         </el-dialog-panel>
