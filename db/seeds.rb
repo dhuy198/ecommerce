@@ -22,6 +22,7 @@ user3 = User.create!(email: "user3@example.com", password: "123456", name: "user
 user4 = User.create!(email: "user4@example.com", password: "123456", name: "user4", address: "Ho Chi Minh Vietnam")
 user5 = User.create!(email: "user5@example.com", password: "123456", name: "user5", address: "Ho Chi Minh Vietnam")
 user6 = User.create!(email: "user6@example.com", password: "123456", name: "user6", address: "Ho Chi Minh Vietnam")
+admin = Admin.create!(email: "admin@example.com", password: "123456")
 
 chair_category = Category.find_by(name: "Chair")
 2.times do |i| 

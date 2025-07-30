@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :admins
+  devise_for :admins, controllers: {
+    sessions: "admins/sessions",
+    registrations: "admins/registrations",
+    passwords: "admins/passwords"
+  }
+  
   devise_for :users, controllers: {
     sessions: "user/sessions",
     registrations: "user/registrations",
@@ -29,6 +34,7 @@ Rails.application.routes.draw do
 
   get 'payments/success', to: 'payments#success'
   namespace :admin do 
+    root to: "products#index"
     resources :users
     resources :orders 
     resources :categories
