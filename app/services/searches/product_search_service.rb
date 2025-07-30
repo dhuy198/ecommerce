@@ -1,5 +1,4 @@
 class Searches::ProductSearchService
-  # khoi tao
   def initialize(params = {})
     @query = params[:query]&.strip&.downcase
     @category_id = params[:category_id]

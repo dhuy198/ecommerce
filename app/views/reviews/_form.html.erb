@@ -1,29 +1,37 @@
-<div class="mx-auto container my-10">
-  <h1 class="text-2xl sm:text-3xl font-bold mb-6 text-center flex items-center justify-center gap-2">
-    Add a review
-  </h1>
-  <%= form_with model: [@product, @product.reviews.build], local: true, class: "space-y-6" do |form| %>
-    <% if @review && @review.errors.any? %>
-      <div class="bg-red-100 border border-red-300 text-red-800 px-4 py-3 rounded-lg mb-4">
-        <h2 class="font-bold mb-2">Please correct the following errors:</h2>
-        <ul class="list-disc list-inside space-y-1">
-          <% @review.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
+<div class="max-w-2xl mx-auto bg-white shadow-md rounded-xl p-8 my-10" data-controller="review" data-product-id="<%= product.id %>">
+  <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Add a Review</h1>
+  <div data-review-target="errors" class="hidden bg-red-100 border border-red-300 text-red-800 px-4 py-3 rounded-lg mb-4 text-sm"></div>
+  <div class="space-y-6">
+    <!-- Comment -->
+    <div>
+      <label class="block text-lg font-medium text-gray-700 mb-2">Comment</label>
+      <textarea data-review-target="comment" rows="4"
+        class="w-full border border-gray-300 rounded-xl p-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition shadow-sm resize-none"></textarea>
+    </div>
+    <!-- Star Rating -->
+    <div>
+      <label class="block text-lg font-medium text-gray-700 mb-2">Rating</label>
+      <div class="flex items-center gap-2" data-review-target="stars">
+        <% 1.upto(5) do |i| %>
+          <svg data-action="click->review#setStar"
+            data-value="<%= i %>"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            class="w-9 h-9 text-gray-300  cursor-pointer transition ease-in-out duration-150 star">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M11.48 3.499l2.592 5.25 5.803.84-4.197 4.09.991 5.781-5.189-2.73-5.188 2.73.99-5.78-4.197-4.09 5.804-.84 2.591-5.25z" />
+          </svg>
+        <% end %>
       </div>
-    <% end %>
-    <div>
-      <%= form.label :comment, class: "block text-lg font-semibold mb-2 text-gray-700" %>
-      <%= form.text_area :comment, rows: 4, class: "form-textarea w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 transition" %>
     </div>
-    <div>
-      <%= form.label :star, class: "block text-lg font-semibold mb-2 text-gray-700" %>
-      <%= form.number_field :star, in: 1..5, class: "form-input w-24 border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition" %>
-      <span class="ml-2 text-yellow-500 text-lg">★</span>
-    </div>
+    <!-- Submit -->
     <div class="flex justify-end">
-      <%= form.submit "Post Review", class: 'bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded-xl shadow-lg transition duration-150' %>
+      <button type="button"
+        data-action="click->review#submit"
+        class="bg-[#23403D] hover:bg-[#2f5c57] text-white text-[16px] font-medium px-4 py-2 rounded-full transition duration-200">
+        Post Review
+      </button>
     </div>
-  <% end %>
+  </div>
 </div>

@@ -46,7 +46,10 @@ Rails.application.routes.draw do
       end
       resource :shipping_information, only: [:create, :update]
       resources :orders, only: [:create]
-    end 
+      resources :products do 
+        resources :reviews, only: [:create]
+       end 
+    end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

@@ -3,7 +3,7 @@
     <!-- Danh mục sản phẩm -->
     <div class="flex flex-wrap gap-8 text-sm text-gray-700">
       <% @categories.each do |category| %>
-        <%= link_to category_path(category), class: "flex items-center gap-2 hover:text-primary transition duration-150" do %>
+        <%= link_to products_path(category_id: category.id), class: "flex items-center gap-2 hover:text-primary transition duration-150" do %>
           <%= category_image_tag(category, class: 'max-h-[25px]') %>
           <span><%= category.name %></span>
         <% end %>
