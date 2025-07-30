@@ -12,6 +12,9 @@ export default class extends Controller {
     "errors",
   ];
   send() {
+    const url = this.element.dataset.url;
+    const method = this.element.dataset.method;
+
     const params = {
       full_name: this.nameTarget.value,
       phone_number: this.phoneTarget.value,
@@ -22,13 +25,13 @@ export default class extends Controller {
       country: this.countryTarget.value,
     };
     const options = {
-      method: "POST",
+      method: method,
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(params),
     };
-    fetch("/api/v1/shipping_information", options)
+    fetch(url, options)
       .then(async (res) => {
         const data = await res.json();
 

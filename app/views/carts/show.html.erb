@@ -54,18 +54,18 @@
         <div class=" my-10">
           <div class="bg-white rounded-2xl shadow-lg p-8 w-full  mx-auto border border-gray-200">
             <h2 class="text-2xl font-bold text-gray-800 mb-6">Shipping Information</h2>
-            <% if @shipping_information.fully? %>
+            <% if current_user.shipping_information.fully? %>
               <div class="space-y-4 text-gray-700">
-                <div><strong>Full Name:</strong> <%= @shipping_information.full_name %></div>
-                <div><strong>Phone:</strong> <%= @shipping_information.phone_number %></div>
-                <div><strong>Address:</strong> <%= @shipping_information.address %>, <%= @shipping_information.district %>, <%= @shipping_information.city %>, <%= @shipping_information.country %></div>
-                <div><strong>Postal Code:</strong> <%= @shipping_information.postal_code %></div>
+                <div><strong>Full Name:</strong> <%= current_user.shipping_information.full_name %></div>
+                <div><strong>Phone:</strong> <%= current_user.shipping_information.phone_number %></div>
+                <div><strong>Address:</strong> <%= current_user.shipping_information.address %>, <%= current_user.shipping_information.district %>, <%= current_user.shipping_information.city %>, <%= current_user.shipping_information.country %></div>
+                <div><strong>Postal Code:</strong> <%= current_user.shipping_information.postal_code %></div>
               </div>
               <div class="mt-6">
-                <%= render 'carts/modal', shipping_information: @shipping_information%>
+                <%= render 'carts/modal', shipping_information: current_user.shipping_information%>
               </div>
             <% else %>
-              <%= render 'carts/modal', shipping_information: @shipping_information%>
+              <%= render 'carts/modal', shipping_information: current_user.shipping_information%>
             <% end %>
           </div>
           <!-- Payment -->
@@ -96,7 +96,7 @@
                     <label for="cod" class="text-sm font-medium text-gray-700">COD</label>
                   </div>
                 </div>
-                <div class="mt-8 text-right <%= @shipping_information.persisted? ? '' : 'hidden' %>">
+                <div class="mt-8 text-right <%= current_user.shipping_information.persisted? ? '' : 'hidden' %>">
                   <!-- cod -->
                   <div data-payment-target="codForm" class="hidden">
                     <button class="bg-[#23403D] hover:bg-[#2f5c57] text-white text-[16px] font-medium px-6 py-4 rounded-full transition duration-200"
