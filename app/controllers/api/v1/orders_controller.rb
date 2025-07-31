@@ -32,8 +32,10 @@ class Api::V1::OrdersController < ApplicationController
                 price: price,
                 quantity: quantity
             )
+            item.product.update(stock: item.product.stock - item.quantity)
         end
-
+        
+        OrderMailer.thank(order).deliver_later
         order.update!(total: total)
         cart.cart_items.destroy_all
 

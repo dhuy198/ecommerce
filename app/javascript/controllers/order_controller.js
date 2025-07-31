@@ -21,7 +21,7 @@ export default class extends Controller {
         return res.json();
       })
       .then((data) => {
-        window.location.href = "/orders";
+        window.location.href = "/thanks";
         console.log(data);
       })
       .catch((e) => {

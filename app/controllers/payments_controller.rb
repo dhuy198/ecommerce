@@ -59,17 +59,19 @@ class PaymentsController < ApplicationController
 
         total = 0
         cart.cart_items.includes(:product).each do |item|
-        price = item.product.price
-        quantity = item.quantity
-        total += price * quantity
+            price = item.product.price
+            quantity = item.quantity
+            total += price * quantity
 
-        order.order_items.create!(
-            product: item.product,
-            price: price,
-            quantity: quantity
-        )
+            order.order_items.create!(
+                product: item.product,
+                price: price,
+                quantity: quantity
+            )
+            item.product.update(stock: item.product.stock - item.quantity)
         end
 
+        OrderMailer.confirmation_email(order).deliver_later
         order.update!(total: total)
         cart.cart_items.destroy_all
     end

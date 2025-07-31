@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   }
   get "home", to: "pages#home"
   get "about", to: "pages#about"
+  get "thanks", to: "pages#thanks"
   resources :products do 
     resources :reviews 
   end

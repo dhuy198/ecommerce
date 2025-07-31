@@ -2,6 +2,11 @@ import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   up() {
+    const stock = this.element.dataset.stock;
+    const itemQuantity = this.element.dataset.itemQuantity;
+    if (stock === itemQuantity) {
+      return;
+    }
     const cartId = this.element.dataset.cartItemId;
     const params = {
       cart_id: cartId,
@@ -30,7 +35,6 @@ export default class extends Controller {
   }
 
   down() {
-    console.log(this.element.dataset.itemQuantity);
     const quantity = parseInt(this.element.dataset.itemQuantity);
     const cartId = this.element.dataset.cartItemId;
     if (quantity === 1) {
