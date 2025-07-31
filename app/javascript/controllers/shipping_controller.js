@@ -15,15 +15,51 @@ export default class extends Controller {
     const url = this.element.dataset.url;
     const method = this.element.dataset.method;
 
+    const full_name = this.nameTarget.value;
+    const phone_number = this.phoneTarget.value;
+    const address = this.addressTarget.value;
+    const city = this.cityTarget.value;
+    const district = this.districtTarget.value;
+    const postal_code = this.postalTarget.value;
+    const country = this.countryTarget.value;
     const params = {
-      full_name: this.nameTarget.value,
-      phone_number: this.phoneTarget.value,
-      address: this.addressTarget.value,
-      city: this.cityTarget.value,
-      district: this.districtTarget.value,
-      postal_code: this.postalTarget.value,
-      country: this.countryTarget.value,
+      full_name: full_name,
+      phone_number: phone_number,
+      address: address,
+      city: city,
+      district: district,
+      postal_code: postal_code,
+      country: country,
     };
+
+    const errors = [];
+    if (!full_name.trim()) {
+      errors.push("Please enter your name");
+    }
+    if (!phone_number.trim() || !/^\d+$/.test(phone_number)) {
+      errors.push("Please enter a valid phone number");
+    }
+    if (!address.trim()) {
+      errors.push("Please enter your address");
+    }
+    if (!city.trim()) {
+      errors.push("Please enter your city");
+    }
+    if (!district.trim()) {
+      errors.push("Please enter your district");
+    }
+    if (!postal_code.trim() || !/^\d+$/.test(postal_code)) {
+      errors.push("Please enter a valid postal code");
+    }
+    if (!country.trim()) {
+      errors.push("Please enter your coutry");
+    }
+
+    if (errors.length > 0) {
+      this.showErrors(errors);
+      return;
+    }
+
     const options = {
       method: method,
       headers: {
@@ -50,7 +86,6 @@ export default class extends Controller {
   }
   showErrors(messages) {
     this.errorsTarget.innerHTML = `
-      <h2 class="font-bold mb-2">Đã có lỗi:</h2>
       <ul class="list-disc pl-5 space-y-1">
         ${messages.map((msg) => `<li>${msg}</li>`).join("")}
       </ul>

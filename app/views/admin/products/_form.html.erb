@@ -29,18 +29,15 @@
     <%= f.label :category_id, "Category", class: "block font-medium" %>
     <%= f.collection_select :category_id, Category.all, :id, :name, { prompt: "Select Category" }, class: "border px-3 py-2 w-full rounded" %>
   </div>
-  <div class="mb-4">
-    <%= f.label :images, "Product Images", class: "block font-medium" %>
-    <%= f.file_field :images, multiple: true, class: "border px-3 py-2 w-full rounded" %>
-    <% if product.images.attached? %>
-      <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
-        <% @product.images.each do |img| %>
-          <div class="bg-white p-1 rounded shadow">
-            <%= image_tag img, class: "w-[64px] h-[64px] object-contain rounded" %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
+  <%= f.label :images, "Product Images", class: "block font-medium" %>
+  <%= f.file_field :images, multiple: true, class: "border px-3 py-2 w-full rounded" %>
+  <% @product.images.each do |image| %>
+    <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+      <%= image_tag image, class: "w-[64px] h-[64px] object-contain rounded" %>
+      <label>
+        <%= check_box_tag "product[remove_image_ids][]", image.id %> Remove
+      </label>
+    </div>
+  <% end %>
   <%= f.submit class: "bg-green-600 text-white px-4 py-2 rounded" %>
 <% end %>

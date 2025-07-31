@@ -24,8 +24,18 @@ export default class extends Controller {
     const star = this.selectedStarValue;
     const productId = this.element.dataset.productId;
 
+    const errors = [];
+
+    if (!comment.trim()) {
+      errors.push("Please write comment");
+    }
+
     if (star < 1 || star > 5) {
-      this.showErrors(["Vui lòng chọn số sao đánh giá (1–5)."]);
+      errors.push("Please choose star");
+    }
+
+    if (errors.length > 0) {
+      this.showErrors(errors);
       return;
     }
     const params = {
@@ -55,7 +65,6 @@ export default class extends Controller {
 
   showErrors(messages) {
     this.errorsTarget.innerHTML = `
-      <h2 class="font-bold mb-2">Vui lòng sửa các lỗi sau:</h2>
       <ul class="list-disc list-inside space-y-1">
         ${messages.map((msg) => `<li>${msg}</li>`).join("")}
       </ul>

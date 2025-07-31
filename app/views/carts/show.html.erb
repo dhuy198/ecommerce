@@ -130,16 +130,18 @@
             <!-- Cart Totals -->
           </div>
         </div>
-        <div class="border border-gray-200 rounded-xl p-8 shadow-sm bg-white h-fit md:col-span-1 cols-span-1">
-          <h2 class="text-xl font-semibold mb-6 text-gray-800">Cart totals</h2>
-          <div class="flex justify-between mb-3 text-sm text-gray-600">
-            <span>Subtotal</span>
-            <span>$<%= '%.2f' % @cart.cart_items.sum { |item| item.product.price * item.quantity } %></span>
-          </div>
-          <div class="flex justify-between text-base font-bold text-gray-800 mb-6">
-            <span>Total</span>
-            <span>$<%= '%.2f' % @cart.cart_items.sum { |item| item.product.price * item.quantity } %></span>
-          </div>
+        <% if @cart.cart_items.sum { |item| item.product.price * item.quantity } > 0 %>
+          <div class="border border-gray-200 rounded-xl p-8 shadow-sm bg-white h-fit md:col-span-1 cols-span-1">
+            <h2 class="text-xl font-semibold mb-6 text-gray-800">Cart totals</h2>
+            <div class="flex justify-between mb-3 text-sm text-gray-600">
+              <span>Subtotal</span>
+              <span>$<%= '%.2f' % @cart.cart_items.sum { |item| item.product.price * item.quantity } %></span>
+            </div>
+            <div class="flex justify-between text-base font-bold text-gray-800 mb-6">
+              <span>Total</span>
+              <span>$<%= '%.2f' % @cart.cart_items.sum { |item| item.product.price * item.quantity } %></span>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
