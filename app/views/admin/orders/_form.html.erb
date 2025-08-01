@@ -1,36 +1,48 @@
-<%= form_with model: [:admin, order], local: true, class: "space-y-4" do |f| %>
-  <% if order.errors.any? %>
+<%= form_with model: [:admin, @order], local: true, class: "space-y-4" do |f| %>
+  <% if f.object.errors.any? %>
     <div class="bg-red-100 text-red-700 p-4 rounded">
       <ul class="list-disc pl-5">
-        <% order.errors.full_messages.each do |msg| %>
+        <% f.object.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
+  <!-- User hoặc Guest -->
   <div>
-    <%= f.label :user_id, "User", class: "block text-sm font-medium text-gray-700" %>
-    <%= f.collection_select :user_id, User.all, :id, :name, { prompt: "Select User" }, class: "w-full mt-1 border px-3 py-2 rounded" %>
+    <%= f.label :gname, "Guest Name", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :gname, class: "w-full mt-1 border px-3 py-2 rounded" %>
   </div>
   <div>
-    <%= f.label :total, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.number_field :total, step: 0.01, class: "w-full mt-1 border px-3 py-2 rounded" %>
+    <%= f.label :gemail, "Guest Email", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.email_field :gemail, class: "w-full mt-1 border px-3 py-2 rounded" %>
   </div>
   <div>
-    <%= f.label :payment_method, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.select :payment_method, ["COD", "Credit Card", "PayPal"], {}, class: "w-full mt-1 border px-3 py-2 rounded" %>
+    <%= f.label :gphone, "Guest Phone", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :gphone, class: "w-full mt-1 border px-3 py-2 rounded" %>
   </div>
   <div>
-    <%= f.label :payment_status, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.select :payment_status, ["unpaid", "paid"], {}, class: "w-full mt-1 border px-3 py-2 rounded" %>
+    <%= f.label :gaddress, "Guest Address", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :gaddress, class: "w-full mt-1 border px-3 py-2 rounded" %>
   </div>
   <div>
-    <%= f.label :deliverd_status, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.select :deliverd_status, ["pending", "shipped", "delivered"], {}, class: "w-full mt-1 border px-3 py-2 rounded" %>
+    <%= f.label :gcity, "Guest City", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :gcity, class: "w-full mt-1 border px-3 py-2 rounded" %>
   </div>
   <div>
-    <%= f.label :shipping_address, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.text_area :shipping_address, rows: 2, class: "w-full mt-1 border px-3 py-2 rounded" %>
+    <%= f.label :gcountry, "Guest Country", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :gcountry, class: "w-full mt-1 border px-3 py-2 rounded" %>
   </div>
-  <%= f.submit class: "bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded" %>
+  <!-- Order Items -->
+  <h3 class="text-lg font-semibold mt-4">Order Items</h3>
+  <div id="order-items">
+    <%= f.fields_for :order_items do |item_form| %>
+      <div class="flex space-x-2 mb-2">
+        <%= item_form.collection_select :product_id, Product.all, :id, :name, {}, class: "border px-2 py-1 rounded w-1/2" %>
+        <%= item_form.number_field :quantity, min: 1, class: "border px-2 py-1 rounded w-1/4" %>
+      </div>
+    <% end %>
+  </div>
+  <!-- Submit -->
+  <%= f.submit "Save Order", class: "bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded" %>
 <% end %>

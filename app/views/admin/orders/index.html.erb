@@ -1,5 +1,6 @@
 <h1 class="text-2xl font-semibold mb-6">Orders Management</h1>
-<table class="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden shadow">
+<%= link_to "Create order at store", new_admin_order_path, class: "btn px-3 py-2 border border-black"%>
+<table class="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden shadow mt-5">
   <thead class="bg-gray-100">
     <tr>
       <th class="px-4 py-2 text-left">ID</th>
@@ -14,21 +15,64 @@
     </tr>
   </thead>
   <tbody>
+    <div class="my-4">
+      Buy in Web
+    </div>
     <% @orders.each do |order| %>
-      <tr class="border-t">
-        <td class="px-4 py-3"><%= order.id %></td>
-        <td class="px-4 py-3"><%= order.user&.email %></td>
-        <td class="px-4 py-3"><%= number_to_currency(order.total) %></td>
-        <td class="px-4 py-3"><%= order.payment_status %></td>
-        <td class="px-4 py-3"><%= order.deliverd_status %></td>
-        <td class="px-4 py-3"><%= order.payment_method.capitalize %></td>
-        <td class="px-4 py-3"><%= order.shipping_address %></td>
-        <td class="px-4 py-3"><%= order.created_at.strftime("%Y-%m-%d") %></td>
-        <td class="px-4 py-3 space-x-2">
-          <%= link_to 'Show', admin_order_path(order), class: "text-blue-600 hover:underline" %>
-          <%= link_to 'Edit', edit_admin_order_path(order), class: "text-yellow-600 hover:underline" %>
-        </td>
-      </tr>
+      <%if order.user_id?%>
+        <tr class="border-t">
+          <td class="px-4 py-3"><%= order.id %></td>
+          <td class="px-4 py-3"><%= order.user&.email %></td>
+          <td class="px-4 py-3"><%= number_to_currency(order.total) %></td>
+          <td class="px-4 py-3"><%= order.payment_status %></td>
+          <td class="px-4 py-3"><%= order.deliverd_status %></td>
+          <td class="px-4 py-3"><%= order.payment_method.capitalize %></td>
+          <td class="px-4 py-3"><%= order.shipping_address %></td>
+          <td class="px-4 py-3"><%= order.created_at.strftime("%Y-%m-%d") %></td>
+          <td class="px-4 py-3 space-x-2">
+            <%= link_to 'Show', admin_order_path(order), class: "text-blue-600 hover:underline" %>
+            <%= link_to 'Edit', edit_admin_order_path(order), class: "text-yellow-600 hover:underline" %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<div class="my-4">
+  Buy at store
+</div>
+<table class="min-w-full border-collapse border border-gray-200 text-sm">
+  <thead>
+    <tr class="bg-gray-100 text-left">
+      <th class="px-4 py-2 border">ID</th>
+      <th class="px-4 py-2 border">Guest Name</th>
+      <th class="px-4 py-2 border">Email</th>
+      <th class="px-4 py-2 border">Phone</th>
+      <th class="px-4 py-2 border">Address</th>
+      <th class="px-4 py-2 border">City</th>
+      <th class="px-4 py-2 border">Country</th>
+      <th class="px-4 py-2 border">Created At</th>
+      <th class="px-4 py-2 border text-center">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @orders.each do |order| %>
+      <%if order.user_id.nil? %>
+        <tr class="hover:bg-gray-50">
+          <td class="px-4 py-2 border"><%= order.id %></td>
+          <td class="px-4 py-2 border"><%= order.gname %></td>
+          <td class="px-4 py-2 border"><%= order.gemail %></td>
+          <td class="px-4 py-2 border"><%= order.gphone %></td>
+          <td class="px-4 py-2 border"><%= order.gaddress %></td>
+          <td class="px-4 py-2 border"><%= order.gcity %></td>
+          <td class="px-4 py-2 border"><%= order.gcountry %></td>
+          <td class="px-4 py-2 border"><%= l(order.created_at, format: :short) %></td>
+          <td class="px-4 py-2 border text-center">
+            <%= link_to "Show", admin_order_path(order), class: "text-blue-600 hover:underline mr-2" %>
+            <%= link_to "Edit", edit_admin_order_path(order), class: "text-yellow-600 hover:underline mr-2" %>
+          </td>
+        </tr>
+      <%end%>
     <% end %>
   </tbody>
 </table>

@@ -8,8 +8,19 @@ class Admin::OrdersController < Admin::ApplicationController
 
   def show
   end
-
+  def new 
+    @order = Order.new
+    @order.order_items.build  
+  end
   def edit
+  end
+  def create 
+    @order = Order.new(order_params)
+    if (@order.save) 
+      redirect_to admin_orders_path
+    else
+      render :new
+    end
   end
 
   def update
@@ -27,6 +38,7 @@ class Admin::OrdersController < Admin::ApplicationController
   end
 
   def order_params
-    params.require(:order).permit(:total, :payment_status, :payment_method, :deliverd_status, :shipping_address)
+    params.require(:order).permit(:total, :payment_status, :payment_method, :deliverd_status, :shipping_address, :gname, :gemail, :gphone, :gaddress, :gcity, :gcountry,
+      order_items_attributes: [:product_id, :quantity])
   end
 end

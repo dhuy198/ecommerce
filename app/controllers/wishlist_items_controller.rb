@@ -1,5 +1,4 @@
 class WishlistItemsController < ApplicationController
-  before_action :authenticate_user!
 
   def create
     @wishlist = current_user.wishlist

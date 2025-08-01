@@ -100,9 +100,16 @@
               </span>
             </i>
           <% end %>
-        <% else %>
-          <%= link_to new_user_session_path, aria: { label: "Wishlist" }, class: 'mr-3' do %>
+        <% else %> <!--non login-->
+          <%= link_to wishlist_path, aria: { label: "Wishlist" }, class: 'mr-3' do %>
             <i class="far fa-heart relative">
+              <span 
+                class="absolute top-[-10px] right-[-10px] bg-[#274C4F] text-white text-[8px] rounded-full px-[5px] py-[3px]"
+                id="wlnloginCount" 
+                data-controller="wlnlogin"
+                data-wishlist-target="text"
+              >
+              </span>
             </i>
           <% end %>
         <% end %>
