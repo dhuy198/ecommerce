@@ -27,12 +27,12 @@ admin = Admin.create!(email: "admin@example.com", password: "123456")
 chair_category = Category.find_by(name: "Chair")
 2.times do |i| 
   chair = Product.create!({
-
     name: "Comfortable Chair #{i+1}",
     description: "A very comfortable and stylish chair.A very comfortable and stylish chair.A very comfortable and stylish chair.A very comfortable and stylish chair.A very comfortable and stylish chair.A very comfortable and stylish chair.A very comfortable and stylish chair.A very comfortable and stylish chair.A very comfortable and stylish chair.A very comfortable and stylish chair.A very comfortable and stylish chair.A very comfortable and stylish chair.A very comfortable and stylish chair.A very comfortable and stylish chair.A very comfortable and stylish chair.",
     price: 10 + i*20,
     stock: 20,
     category: chair_category,
+    discount_value: 5,
     is_deleted: false
   })
   

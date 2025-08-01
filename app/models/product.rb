@@ -18,4 +18,14 @@ class Product < ApplicationRecord
   }
 
   has_many_attached :images
+  def percent 
+    if (!discount_value.nil?)
+      (price - discount_value)/price * 100
+    else
+      return 0
+    end
+  end 
+  def pa 
+    discount_value.nil? ? price : discount_value
+  end
 end
