@@ -8,5 +8,7 @@ class CartsController < ApplicationController
     @cart.cart_items.each do |item|
       @total += item.product.price * item.quantity
     end
+
+    @taxes = Tax.all
   end
 end

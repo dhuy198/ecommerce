@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  begin: 2025-08-01 14:01:52
+  end: 2025-08-01 14:01:52
+  name: MyString
+  value: 9.99
+
+two:
+  begin: 2025-08-01 14:01:52
+  end: 2025-08-01 14:01:52
+  name: MyString
+  value: 9.99

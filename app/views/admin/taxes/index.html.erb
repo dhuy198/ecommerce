@@ -1,0 +1,38 @@
+<div class="max-w-4xl mx-auto bg-white p-6 rounded shadow">
+  <h1 class="text-2xl font-bold mb-4">Taxes</h1>
+  <div class="flex justify-end mb-4">
+    <%= link_to "New Tax", new_admin_tax_path, class: "bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded" %>
+  </div>
+  <table class="min-w-full border border-gray-200">
+    <thead>
+      <tr class="bg-gray-100 text-left">
+        <th class="px-4 py-2 border">Begin</th>
+        <th class="px-4 py-2 border">End</th>
+        <th class="px-4 py-2 border">Name</th>
+        <th class="px-4 py-2 border">Value</th>
+        <th class="px-4 py-2 border text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @taxes.each do |tax| %>
+        <tr class="hover:bg-gray-50">
+          <td class="px-4 py-2 border"><%= tax.begin %></td>
+          <td class="px-4 py-2 border"><%= tax.end %></td>
+          <td class="px-4 py-2 border"><%= tax.name %></td>
+          <td class="px-4 py-2 border"><%= tax.value %></td>
+          <td class="px-4 py-2 border text-center">
+            <%= link_to "Show", admin_tax_path(tax), class: "text-blue-600 hover:underline mr-2" %>
+            <%= link_to "Edit", edit_admin_tax_path(tax), class: "text-yellow-600 hover:underline mr-2" %>
+            <%= link_to "Delete", admin_tax_path(tax), 
+                  method: :delete, 
+                  data: { confirm: "Are you sure?" }, 
+                  class: "text-red-600 hover:underline" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% if @taxes.empty? %>
+    <p class="text-gray-500 mt-4">No tax records found.</p>
+  <% end %>
+</div>
