@@ -29,7 +29,10 @@ class Api::V1::CartItemsController < ApplicationController
         cart_item = current_user.cart.cart_items.find(params[:id])
         cart_item.update!(quantity: cart_item.quantity + 1)
         render json: {
-            cart_item_quantity: cart_item.quantity
+            cart_item_quantity: cart_item.quantity,
+            total: current_user.cart.total,
+            total_item: cart_item.total_item
+        
         }, status: :ok   
     end
 
@@ -46,7 +49,9 @@ class Api::V1::CartItemsController < ApplicationController
             end
         end
         render json: {
-            cart_item_quantity: cart_item.quantity
+            cart_item_quantity: cart_item.quantity,
+            total: current_user.cart.total,
+            total_item: cart_item.total_item
         }, status: :ok  
     end
 

@@ -27,8 +27,11 @@ export default class extends Controller {
       })
       .then((data) => {
         let sl = document.getElementById(`sl-${cartId}`);
+        const totalItem = document.getElementById(`totalItem-${cartId}`);
+
         sl.innerText = data.cart_item_quantity;
         this.element.dataset.itemQuantity = data.cart_item_quantity;
+        totalItem.innerText = `$${Number(data.total_item).toFixed(2)}`;
         console.log(data);
       })
       .catch((e) => {});
@@ -61,8 +64,13 @@ export default class extends Controller {
       })
       .then((data) => {
         let sl = document.getElementById(`sl-${cartId}`);
+        const totalItem = document.getElementById(`totalItem-${cartId}`);
+
         sl.innerText = data.cart_item_quantity;
         this.element.dataset.itemQuantity = data.cart_item_quantity;
+        totalItem.innerText = `$${Number(data.total_item).toFixed(2)}`;
+
+        console.log(data);
       })
       .catch((e) => {
         console.log(e);

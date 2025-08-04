@@ -39,7 +39,7 @@
                 </div>
               </div>
               <!-- Subtotal -->
-              <div class="col-span-2 text-sm text-gray-800 font-medium">
+              <div class="col-span-2 text-sm text-gray-800 font-medium" id="totalItem-<%=item.id%>">
                 $<%= '%.2f' % (item.product.price * item.quantity) %>
               </div>
               <!-- Remove -->
@@ -128,9 +128,9 @@
                 </div>
               <% end %>
             </div>
-            <!-- Cart Totals -->
           </div>
         </div>
+        <!-- Cart Totals -->
         <% cart_total = @cart.cart_items.sum { |item| item.product.price * item.quantity } %>
         <% tax_total = @taxes.select(&:valid?).sum { |t| cart_total * t.value / 100 } %>
         <% grand_total = cart_total + tax_total %>
