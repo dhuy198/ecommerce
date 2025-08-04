@@ -131,35 +131,7 @@
           </div>
         </div>
         <!-- Cart Totals -->
-        <% cart_total = @cart.cart_items.sum { |item| item.product.price * item.quantity } %>
-        <% tax_total = @taxes.select(&:valid?).sum { |t| cart_total * t.value / 100 } %>
-        <% grand_total = cart_total + tax_total %>
-        <% if cart_total > 0 %>
-          <div class="border border-gray-200 rounded-xl p-8 shadow-sm bg-white h-fit md:col-span-1 cols-span-1">
-            <h2 class="text-xl font-semibold mb-6 text-gray-800">Cart Totals</h2>
-            <!-- Subtotal -->
-            <div class="flex justify-between mb-3 text-sm text-gray-600">
-              <span>Subtotal</span>
-              <span><%= number_to_currency(cart_total) %></span>
-            </div>
-            <!-- Tax -->
-            <% @taxes.each do |t| %>
-              <% if t.valid? %>
-                <div class="flex justify-between mb-3 text-sm text-gray-600">
-                  <span><%= t.name %> (<%= t.value %>%)</span>
-                  <span><%= number_to_currency(cart_total * t.value / 100) %></span>
-                </div>
-              <% end %>
-            <% end %>
-            <!-- Divider -->
-            <hr class="my-4">
-            <!-- Total -->
-            <div class="flex justify-between text-base font-bold text-gray-800 mb-6">
-              <span>Total</span>
-              <span><%= number_to_currency(grand_total) %></span>
-            </div>
-          </div>
-        <% end %>
+        <%= render 'carts/total'%>
       </div>
     </div>
   </div>

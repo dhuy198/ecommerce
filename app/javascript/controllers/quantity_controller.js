@@ -4,6 +4,7 @@ export default class extends Controller {
   up() {
     const stock = this.element.dataset.stock;
     const itemQuantity = this.element.dataset.itemQuantity;
+
     if (stock === itemQuantity) {
       return;
     }
@@ -28,11 +29,19 @@ export default class extends Controller {
       .then((data) => {
         let sl = document.getElementById(`sl-${cartId}`);
         const totalItem = document.getElementById(`totalItem-${cartId}`);
-
+        const total1 = document.getElementById("total1");
+        const total2 = document.getElementById("total2");
+        const tax = document.getElementById("tax");
         sl.innerText = data.cart_item_quantity;
         this.element.dataset.itemQuantity = data.cart_item_quantity;
         totalItem.innerText = `$${Number(data.total_item).toFixed(2)}`;
-        console.log(data);
+        total1.innerText = `$${Number(data.total).toFixed(2)}`;
+        tax.innerText = `$${Number(
+          (data.total * tax.dataset.tax) / 100
+        ).toFixed(2)}`;
+        total2.innerText = `$${Number(
+          data.total * (1 + tax.dataset.tax / 100)
+        ).toFixed(2)}`;
       })
       .catch((e) => {});
   }
@@ -69,8 +78,16 @@ export default class extends Controller {
         sl.innerText = data.cart_item_quantity;
         this.element.dataset.itemQuantity = data.cart_item_quantity;
         totalItem.innerText = `$${Number(data.total_item).toFixed(2)}`;
-
-        console.log(data);
+        const total1 = document.getElementById("total1");
+        const total2 = document.getElementById("total2");
+        const tax = document.getElementById("tax");
+        total1.innerText = `$${Number(data.total).toFixed(2)}`;
+        tax.innerText = `$${Number(
+          (data.total * tax.dataset.tax) / 100
+        ).toFixed(2)}`;
+        total2.innerText = `$${Number(
+          data.total * (1 + tax.dataset.tax / 100)
+        ).toFixed(2)}`;
       })
       .catch((e) => {
         console.log(e);
