@@ -1,22 +1,42 @@
-<h1 style="color:#2c3e50; font-family:Arial, sans-serif;">Cảm ơn bạn đã đặt hàng tại <%= Rails.application.class.module_parent_name %>!</h1>
-<p style="font-size:16px; color:#34495e;">Xin chào <strong><%= @user.name %></strong>,</p>
+<h1 style="color:#2c3e50; font-family:Arial, sans-serif;">
+  Cảm ơn bạn đã đặt hàng tại <%= Rails.application.class.module_parent_name %>!
+</h1>
+<p style="font-size:16px; color:#34495e;">
+  Xin chào 
+  <strong><%= @user&.name || @order.gname %></strong>,
+</p>
 <p style="font-size:15px; color:#555;">
-  Chúng tôi đã nhận được đơn hàng của bạn với mã đơn <strong>#<%= @order.id %></strong>
-  ngày <%= l(@order.created_at, format: :long) %>. Đơn hàng của bạn hiện đang được xử lý và 
-  sẽ sớm được giao đến địa chỉ <%= @user.shipping_information.address%> <%= @user.shipping_information.city%> <%= @user.shipping_information.country%>.
+  Chúng tôi đã nhận được đơn hàng của bạn với mã đơn 
+  <strong>#<%= @order.id %></strong>
+  ngày <%= l(@order.created_at, format: :long) %>. 
+  Đơn hàng của bạn hiện đang được xử lý và sẽ sớm được giao đến địa chỉ:
+  <%= if @user&.shipping_information.present?
+        "#{@user.shipping_information.address} #{@user.shipping_information.city} #{@user.shipping_information.country}"
+      else
+        "#{@order.gaddress} #{@order.gcity} #{@order.gcountry}"
+      end %>.
 </p>
 <h3 style="color:#2c3e50;">Thông tin đơn hàng:</h3>
 <ul style="font-size:15px; color:#555;">
   <% @order.order_items.each do |item| %>
-    <li><%= item.product.name %> - <%= item.quantity %> x <%= number_to_currency(item.price) %></li>
+    <li>
+      <%= item.product.name %> - 
+      <%= item.quantity %> x 
+      <%= number_to_currency(item.price) %>
+    </li>
   <% end %>
 </ul>
 <p style="font-size:15px; color:#555;">
-  Tổng tiền: <strong><%= number_to_currency(@order.total) %></strong>
+  Tổng tiền: 
+  <strong><%= number_to_currency(@order.total) %></strong>
 </p>
 <p style="font-size:14px; color:#7f8c8d;">
   Bạn có thể theo dõi trạng thái đơn hàng của mình tại 
-  <a href="<%= order_url(@order) %>" style="color:#3498db;">trang quản lý đơn hàng</a>.
+  <a href="<%= order_url(@order) %>" style="color:#3498db;">
+    trang quản lý đơn hàng
+  </a>.
 </p>
-<p style="font-size:15px; color:#555;">Cảm ơn bạn đã tin tưởng và mua sắm cùng chúng tôi!<br>
-  Đội ngũ <%= Rails.application.class.module_parent_name %></p>
+<p style="font-size:15px; color:#555;">
+  Cảm ơn bạn đã tin tưởng và mua sắm cùng chúng tôi!<br>
+  Đội ngũ <%= Rails.application.class.module_parent_name %>
+</p>

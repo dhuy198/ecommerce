@@ -117,3 +117,12 @@
       </svg>
     </div>
   </div>
+
+<%= javascript_tag do %>
+  document.addEventListener("turbo:load", () => {
+        const notice = document.querySelector(".flash-notice");
+        if (notice && notice.textContent.includes("Order placed successfully")) {
+        localStorage.removeItem("cart");
+        }
+        });
+      <% end %>

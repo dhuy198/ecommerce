@@ -3,7 +3,8 @@ class OrderMailer < ApplicationMailer
 
     def thank(order)
         @order = order
-        @user = order.user
-        mail(to: @user.email, subject: 'Thank you') 
+        recipient = order.user&.email || order.gemail
+        mail(to: recipient, subject: 'Thank you')
     end
+
 end
