@@ -13,39 +13,59 @@ class OrdersController < ApplicationController
 
   def create
     @order = Order.new(order_params)
+    cart_items = JSON.parse(params[:cart_items] || "[]")
+    total = 0
+    order_items = []
+    stock_errors = []
+
+    cart_items.each do |item|
+      product = Product.find_by(id: item["id"])
+      quantity = item["quantity"].to_i
+      next unless product
+
+      if product.stock < quantity
+        stock_errors << "Sản phẩm '#{product.name}' chỉ còn #{product.stock} trong kho."
+        next
+      end
+
+      order_items << {
+        product: product,
+        quantity: quantity,
+        price: product.price
+      }
+
+      total += product.price * quantity
+    end
+
+    if stock_errors.any?
+      flash[:alert] = stock_errors.join("\n")
+      return redirect_to cart_path
+    end
 
     if @order.save
-        cart_items = JSON.parse(params[:cart_items] || "[]")
-        total = 0
-
-        cart_items.each do |item|
-        product = Product.find_by(id: item["id"])
-        next unless product
-
-        quantity = item["quantity"].to_i
-        total += product.price * quantity
-
+      order_items.each do |item|
         @order.order_items.create!(
-            product: product,
-            price: product.price,
-            quantity: quantity
+          product: item[:product],
+          price: item[:price],
+          quantity: item[:quantity]
         )
+        item[:product].update!(stock: item[:product].stock - item[:quantity])
+      end
 
-        product.update!(stock: product.stock - quantity)
-        end
-
-        @order.update!(total: total)
-        OrderMailer.thank(@order).deliver_later
-        redirect_to cart_path, notice: "Order placed successfully"
+      @order.update!(total: total)
+      OrderMailer.thank(@order).deliver_later
+      redirect_to cart_path, notice: "Đặt hàng thành công"
     else
-        render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
-    end
+  end
+
+
 
 private
 
 def order_params
-  params.require(:order).permit(:gname, :gemail, :gphone, :gaddress, :gcity, :gcountry)
+  params.require(:order).permit(:gname, :gemail, :gphone, :gaddress, :gcity, :gcountry,:payment_status, :payment_method, :deliverd_status)
 end
 
 

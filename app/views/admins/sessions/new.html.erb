@@ -10,6 +10,9 @@
       <%= f.password_field :password, autocomplete: "current-password", class: "mt-1 block w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm" %>
     </div>
     <div>
+      <% if alert %>
+        <div class="text-red-600 mb-2"><%= alert %></div>
+      <% end %>
       <%= f.submit "Log in", class: "bg-[#152420] mx-auto cursor-pointer flex justify-center py-3 px-4 border border-transparent rounded-md  text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" %>
     </div>
   <% end %>

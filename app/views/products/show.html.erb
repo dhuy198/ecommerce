@@ -131,7 +131,9 @@
     </div>
     <br>
     <!--reviews-->
-    <%= render 'reviews/review', reviews: @reviews%>
+    <turbo-frame id="reviews">
+      <%= render 'reviews/review', reviews: @reviews %>
+    </turbo-frame>
     <!-- form -->
   </div>
 </div>

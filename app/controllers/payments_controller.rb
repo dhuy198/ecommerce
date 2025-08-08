@@ -2,7 +2,18 @@ class PaymentsController < ApplicationController
     before_action :set_hide_navbar
 
     def create
+        stock_errors = []
         cart = Cart.find(payments_params[:cart_id])
+        cart.cart_items.each do |item|
+            if item.product.stock < item.quantity
+                stock_errors << "Sản phẩm '#{item.product.name}' chỉ còn #{item.product.stock} trong kho."
+                next
+            end
+        end
+        if stock_errors.any?
+            flash[:alert] = stock_errors.join("\n")
+            return redirect_to cart_path
+        end
         line_items = cart.cart_items.map do |item|
             {
             price_data: {
@@ -71,7 +82,7 @@ class PaymentsController < ApplicationController
             item.product.update(stock: item.product.stock - item.quantity)
         end
 
-        OrderMailer.confirmation_email(order).deliver_later
+        OrderMailer.thank(order).deliver_later
         order.update!(total: total)
         cart.cart_items.destroy_all
     end

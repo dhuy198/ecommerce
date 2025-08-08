@@ -32,6 +32,17 @@
       </div>
       <%= render 'layouts/navbar2' unless @hide %>
       <%= yield %>
+      <% if flash[:alert].present? %>
+        <div id="flash-alert" class="fixed top-6 right-6 z-50">
+          <div class="bg-red-100 text-red-800 border border-red-300 px-4 py-3 rounded-lg shadow-lg text-sm max-w-sm transition-opacity duration-500">
+            <%= flash[:alert].gsub("\n", "<br>").html_safe %>
+          </div>
+        </div>
+      <% end %>
+      <!---->
+      <div id="alert-box" class="hidden">
+        <span id="alert-message"></span>
+      </div>
     </main>
     <footer>
       <%= render 'layouts/footer' unless @hide %>

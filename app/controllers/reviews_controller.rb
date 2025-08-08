@@ -25,11 +25,18 @@ class ReviewsController < ApplicationController
     @review.user = current_user
 
     if @review.save
-      redirect_to @product, notice: 'Review was successfully created.'
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to @product, notice: 'Review was successfully created.' }
+      end
     else
-      render :new, status: :unprocessable_entity
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.replace('review_form', partial: 'reviews/form', locals: { review: @review }) }
+        format.html { render :new, status: :unprocessable_entity }
+      end
     end
   end
+
 
   def update
     @product = Product.find(params[:product_id])

@@ -1,4 +1,4 @@
-<div class="max-w-2xl mx-auto bg-white shadow-md rounded-xl p-8 my-10" data-controller="review" data-product-id="<%= product.id %>">
+<div class="max-w-2xl mx-auto bg-white shadow-md rounded-xl p-8 my-10" data-controller="review" data-product-id="<%= product.id %>" data: { turbo_stream: true }>
   <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Add a Review</h1>
   <div data-review-target="errors" class="hidden bg-red-100 border border-red-300 text-red-800 px-4 py-3 rounded-lg mb-4 text-sm"></div>
   <div class="space-y-6">

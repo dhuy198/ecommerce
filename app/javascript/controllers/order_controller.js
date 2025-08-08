@@ -15,17 +15,24 @@ export default class extends Controller {
     };
     fetch("/api/v1/orders", options)
       .then((res) => {
-        if (!res.ok) {
-          throw Error(res.status);
-        }
-        return res.json();
+        return res.json().then((data) => {
+          if (!res.ok) {
+            throw data;
+          }
+          return data;
+        });
       })
       .then((data) => {
         window.location.href = "/thanks";
-        console.log(data);
       })
       .catch((e) => {
-        console.log(e);
+        if (e.messages) {
+          e.messages.forEach((msg) => showAlert(msg));
+        } else if (e.error) {
+          showAlert(e.error);
+        } else {
+          showAlert("Đã xảy ra lỗi không xác định.");
+        }
       });
   }
 }
