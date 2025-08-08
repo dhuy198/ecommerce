@@ -1,6 +1,6 @@
 <%= form_with model: [:admin, @tax], local: true, class: "space-y-4" do |f| %>
   <% if f.object.errors.any? %>
-    <div class="bg-red-100 text-red-700 p-4 rounded">
+    <div class="bg-red-100 text-red-700 p-4 rounded-lg border border-red-200">
       <ul class="list-disc pl-5">
         <% f.object.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
@@ -9,20 +9,21 @@
     </div>
   <% end %>
   <div>
-    <%= f.label :beign, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.date_select :begin, {}, class: "w-full mt-1 border px-3 py-2 rounded" %>
+    <%= f.label :begin, "Begin", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.date_select :begin, {}, { class: "mt-1 w-full border border-gray-300 rounded px-3 py-2" } %>
   </div>
   <div>
-    <%= f.label :end, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.date_select :end, {}, class: "w-full mt-1 border px-3 py-2 rounded" %>
+    <%= f.label :end, "End", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.date_select :end, {}, { class: "mt-1 w-full border border-gray-300 rounded px-3 py-2" } %>
   </div>
   <div>
     <%= f.label :name, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.text_field :name, class: "w-full mt-1 border px-3 py-2 rounded" %>
+    <%= f.text_field :name, class: "mt-1 w-full border border-gray-300 rounded px-3 py-2" %>
   </div>
   <div>
     <%= f.label :value, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.number_field :value, step: 0.01, class: "w-full mt-1 border px-3 py-2 rounded" %>
+    <%= f.number_field :value, step: 0.01, class: "mt-1 w-full border border-gray-300 rounded px-3 py-2" %>
   </div>
-  <%= f.submit class: "bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded" %>
+  <%= f.submit "Save Tax", 
+        class: "bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-lg shadow transition" %>
 <% end %>

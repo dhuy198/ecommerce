@@ -1,30 +1,32 @@
-<div class="max-w-6xl mx-auto mt-10">
-  <h1 class="text-2xl font-bold mb-4">Users</h1>
-  <table class="min-w-full bg-white shadow rounded">
-    <thead class="bg-gray-100">
-      <tr>
-        <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Name</th>
-        <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Email</th>
-        <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Address</th>
-        <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">City</th>
-        <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Country</th>
-        <th class="px-4 py-2 text-sm font-medium text-gray-600">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @users.each do |user| %>
-        <tr class="border-t">
-          <td class="px-4 py-2"><%= user.name %></td>
-          <td class="px-4 py-2"><%= user.email %></td>
-          <td class="px-4 py-2"><%= user.address %></td>
-          <td class="px-4 py-2"><%= user.city %></td>
-          <td class="px-4 py-2"><%= user.country %></td>
-          <td class="px-4 py-2 space-x-2">
-            <%= link_to 'Edit', edit_admin_user_path(user), class: "text-blue-600 hover:underline" %>
-            <%= link_to 'Delete', admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: "text-red-600 hover:underline" %>
-          </td>
+<div class="w-full mx-auto m-10 p-10">
+  <h1 class="text-3xl text-black pb-6">Users</h1>
+  <div class="bg-white overflow-auto rounded-lg shadow">
+    <table class="min-w-full bg-white">
+      <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+        <tr>
+          <th class="py-3 px-6 text-left">Name</th>
+          <th class="py-3 px-6 text-left">Email</th>
+          <th class="py-3 px-6 text-left">Address</th>
+          <th class="py-3 px-6 text-left">City</th>
+          <th class="py-3 px-6 text-left">Country</th>
+          <th class="py-3 px-6 text-center">Actions</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody class="text-gray-700 text-sm font-light">
+        <% @users.each do |user| %>
+          <tr class="border-b border-gray-200 hover:bg-gray-100">
+            <td class="py-3 px-6 text-left whitespace-nowrap"><%= user.name %></td>
+            <td class="py-3 px-6 text-left"><%= user.email %></td>
+            <td class="py-3 px-6 text-left"><%= user.address %></td>
+            <td class="py-3 px-6 text-left"><%= user.city %></td>
+            <td class="py-3 px-6 text-left"><%= user.country %></td>
+            <td class="py-3 px-6 text-center space-x-2">
+              <%= link_to 'Edit', edit_admin_user_path(user), class: "bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition" %>
+              <%= link_to 'Delete', admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: "bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

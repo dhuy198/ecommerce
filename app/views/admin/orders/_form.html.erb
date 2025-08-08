@@ -1,48 +1,57 @@
-<%= form_with model: [:admin, @order], local: true, class: "space-y-4" do |f| %>
+<%= form_with model: [:admin, @order], local: true, class: "space-y-6" do |f| %>
   <% if f.object.errors.any? %>
-    <div class="bg-red-100 text-red-700 p-4 rounded">
-      <ul class="list-disc pl-5">
+    <div class="bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg">
+      <ul class="list-disc pl-5 space-y-1">
         <% f.object.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
-  <!-- User hoặc Guest -->
-  <div>
-    <%= f.label :gname, "Guest Name", class: "block text-sm font-medium text-gray-700" %>
-    <%= f.text_field :gname, class: "w-full mt-1 border px-3 py-2 rounded" %>
-  </div>
-  <div>
-    <%= f.label :gemail, "Guest Email", class: "block text-sm font-medium text-gray-700" %>
-    <%= f.email_field :gemail, class: "w-full mt-1 border px-3 py-2 rounded" %>
-  </div>
-  <div>
-    <%= f.label :gphone, "Guest Phone", class: "block text-sm font-medium text-gray-700" %>
-    <%= f.text_field :gphone, class: "w-full mt-1 border px-3 py-2 rounded" %>
-  </div>
-  <div>
-    <%= f.label :gaddress, "Guest Address", class: "block text-sm font-medium text-gray-700" %>
-    <%= f.text_field :gaddress, class: "w-full mt-1 border px-3 py-2 rounded" %>
-  </div>
-  <div>
-    <%= f.label :gcity, "Guest City", class: "block text-sm font-medium text-gray-700" %>
-    <%= f.text_field :gcity, class: "w-full mt-1 border px-3 py-2 rounded" %>
-  </div>
-  <div>
-    <%= f.label :gcountry, "Guest Country", class: "block text-sm font-medium text-gray-700" %>
-    <%= f.text_field :gcountry, class: "w-full mt-1 border px-3 py-2 rounded" %>
+  <!-- Guest Info -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <%= f.label :gname, "Guest Name", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :gname, class: "mt-1 block w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+    <div>
+      <%= f.label :gemail, "Guest Email", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.email_field :gemail, class: "mt-1 block w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+    <div>
+      <%= f.label :gphone, "Guest Phone", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :gphone, class: "mt-1 block w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+    <div>
+      <%= f.label :gaddress, "Guest Address", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :gaddress, class: "mt-1 block w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+    <div>
+      <%= f.label :gcity, "Guest City", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :gcity, class: "mt-1 block w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+    <div>
+      <%= f.label :gcountry, "Guest Country", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :gcountry, class: "mt-1 block w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
   </div>
   <!-- Order Items -->
-  <h3 class="text-lg font-semibold mt-4">Order Items</h3>
-  <div id="order-items">
-    <%= f.fields_for :order_items do |item_form| %>
-      <div class="flex space-x-2 mb-2">
-        <%= item_form.collection_select :product_id, Product.all, :id, :name, {}, class: "border px-2 py-1 rounded w-1/2" %>
-        <%= item_form.number_field :quantity, min: 1, class: "border px-2 py-1 rounded w-1/4" %>
-      </div>
-    <% end %>
+  <div>
+    <h3 class="text-lg font-semibold border-b pb-2 mb-4">Order Items</h3>
+    <div id="order-items" class="space-y-3">
+      <%= f.fields_for :order_items do |item_form| %>
+        <div class="flex space-x-3">
+          <%= item_form.collection_select :product_id, Product.all, :id, :name, {}, 
+                class: "block w-2/3 border border-gray-300 px-3 py-2 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+          <%= item_form.number_field :quantity, min: 1, 
+                class: "block w-1/3 border border-gray-300 px-3 py-2 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+        </div>
+      <% end %>
+    </div>
   </div>
   <!-- Submit -->
-  <%= f.submit "Save Order", class: "bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded" %>
+  <div>
+    <%= f.submit "Save Order", 
+          class: "bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg shadow-md transition-colors" %>
+  </div>
 <% end %>

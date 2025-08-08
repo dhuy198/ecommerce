@@ -12,53 +12,65 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = Order.new(order_params)
-    cart_items = JSON.parse(params[:cart_items] || "[]")
-    total = 0
-    order_items = []
-    stock_errors = []
+  cart_items = JSON.parse(params[:cart_items] || "[]")
+  total = 0
+  order_items = []
+  stock_errors = []
 
-    cart_items.each do |item|
-      product = Product.find_by(id: item["id"])
-      quantity = item["quantity"].to_i
-      next unless product
+  cart_items.each do |item|
+    product = Product.find_by(id: item["id"])
+    quantity = item["quantity"].to_i
+    next unless product
 
-      if product.stock < quantity
-        stock_errors << "Sản phẩm '#{product.name}' chỉ còn #{product.stock} trong kho."
-        next
-      end
-
-      order_items << {
-        product: product,
-        quantity: quantity,
-        price: product.price
-      }
-
-      total += product.price * quantity
+    if product.stock < quantity
+      stock_errors << "Sản phẩm '#{product.name}' chỉ còn #{product.stock} trong kho."
+      next
     end
 
-    if stock_errors.any?
-      flash[:alert] = stock_errors.join("\n")
-      return redirect_to cart_path
-    end
+    order_items << {
+      product: product,
+      quantity: quantity,
+      price: product.price
+    }
 
-    if @order.save
-      order_items.each do |item|
-        @order.order_items.create!(
-          product: item[:product],
-          price: item[:price],
-          quantity: item[:quantity]
-        )
-        item[:product].update!(stock: item[:product].stock - item[:quantity])
-      end
-
-      @order.update!(total: total)
-      OrderMailer.thank(@order).deliver_later
-      redirect_to cart_path, notice: "Đặt hàng thành công"
-    else
-      render :new, status: :unprocessable_entity
-    end
+    total += product.price * quantity
   end
+
+  if stock_errors.any?
+    flash[:alert] = stock_errors.join("\n")
+    return redirect_to cart_path
+  end
+
+  @order = Order.new(order_params)
+  @order.total = total
+
+  success_url = url_for(controller: 'payments', action: 'success', only_path: false, booking_params: payments_params.except(:stripeToken))
+  session = Stripe::Checkout::Session.create({
+      payment_method_types: ['card'],
+      line_items: line_items,
+      mode: 'payment',
+      customer: stripe_customer.id,
+      success_url: success_url,
+      # cancel_url: 
+  })
+  redirect_to session.url, allow_other_host: true, status:303
+
+  if @order.save
+    order_items.each do |item|
+      @order.order_items.create!(
+        product: item[:product],
+        price: item[:price],
+        quantity: item[:quantity]
+      )
+      item[:product].update!(stock: item[:product].stock - item[:quantity])
+    end
+
+    OrderMailer.thank(@order).deliver_later
+    redirect_to cart_path, notice: "Đặt hàng thành công"
+  else
+    render :new, status: :unprocessable_entity
+  end
+end
 
 
 

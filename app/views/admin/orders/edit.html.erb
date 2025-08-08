@@ -1,5 +1,7 @@
-<div class="max-w-xl mx-auto mt-10">
-  <h1 class="text-xl font-bold mb-4">Edit Order</h1>
-  <%= render 'form', order: @order %>
-  <%= link_to "Back", admin_orders_path, class: "text-gray-600 hover:underline mt-4 inline-block" %>
+<div class="container mx-auto p-6">
+  <h1 class="text-3xl font-semibold mb-6">Edit Order</h1>
+  <div class="bg-white shadow-md rounded-lg p-6">
+    <%= render 'form', order: @order %>
+  </div>
+  <%= link_to "Back", admin_orders_path, class: "inline-block mt-6 text-blue-600 hover:underline text-sm" %>
 </div>

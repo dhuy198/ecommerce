@@ -35,13 +35,14 @@ Rails.application.routes.draw do
 
   get 'payments/success', to: 'payments#success'
   namespace :admin do 
-    root to: "products#index"
+    root to: "pages#index"
     resources :users
     resources :orders 
     resources :categories
     resources :products
     resources :reviews
     resources :taxes
+    resources :pages
   end
   namespace :api do 
     namespace :v1 do 
