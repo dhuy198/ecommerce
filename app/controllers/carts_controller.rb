@@ -11,5 +11,6 @@ class CartsController < ApplicationController
     end 
 
     @taxes = Tax.all
+    @cards = current_user.cards if user_signed_in?
   end
 end

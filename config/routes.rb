@@ -34,6 +34,9 @@ Rails.application.routes.draw do
   end
 
   get 'payments/success', to: 'payments#success'
+  resources :payments do
+    get 'success_payment_intent', on: :collection
+  end
   namespace :admin do 
     root to: "pages#index"
     resources :users

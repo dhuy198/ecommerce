@@ -96,47 +96,102 @@
                       <label for="cod" class="text-sm font-medium text-gray-700">COD</label>
                     </div>
                   </div>
-                  <div class="mt-8 text-right <%= current_user.shipping_information.present? ? '' : 'hidden' %>">
-                    <!-- cod -->
-                    <div data-payment-target="codForm" class="hidden">
-                      <button class="bg-[#23403D] hover:bg-[#2f5c57] text-white text-[16px] font-medium px-6 py-4 rounded-full transition duration-200"
-                      data-controller="order"
-                      data-action="click->order#make"
-                        data-user-id="<%= current_user.id%>"
-                        >
-                        Create Order
-                      </button>
+                  
+          <div class="mt-8 text-right <%= current_user.shipping_information.present? ? '' : 'hidden' %>">
+            <!-- cod -->
+            <div data-payment-target="codForm" class="hidden">
+              <button class="bg-[#23403D] hover:bg-[#2f5c57] text-white text-[16px] font-medium px-6 py-4 rounded-full transition duration-200"
+                                      data-controller="order"
+                                      data-action="click->order#make"
+                data-user-id="<%= current_user.id%>"
+                >
+                Create Order
+              </button>
+            </div>
+            <!--pay card-->
+            <div data-payment-target="cardForm">
+              <%= form_with url: payments_path(
+                                        cart_id: @cart.id, 
+                                        user_id: @current_user.id,
+                                        total: @total
+                                      ), method: :post do |form| %>
+                                      <div class = "", id= "credit_card" >
+                  <div class="space-y-3 mt-4 bg-white rounded-2xl ">
+                    <% @cards.each_with_index do |card, index| %>
+                      <label for="card_<%= index %>" class="flex items-center space-x-4 cursor-pointer rounded-md  p-3  transition-colors duration-200">
+                        <input
+                          type="radio"
+                          name="payment_method_id"
+                          id="card_<%= index %>"
+                          value="<%= card.stripe_card_id %>"
+                          checked  
+                          class="w-5 h-5 text-[#23403D] focus:ring-[#23403D] border-gray-300 rounded"
+                        />
+                      <div class="w-72 relative bg-red-100 rounded-xl shadow-lg p-4 text-gray-800">
+                        <div class="flex justify-between mb-2">
+                          <div>
+                            <p class="font-light text-xs">Card <%= index + 1 %></p>
+                          <p class="font-semibold tracking-wider uppercase"><%= card.brand %></p>
+                        </div>
+                      </div>
+                      <div class="font-mono tracking-widest text-lg mb-2">
+                        **** **** **** <%= card.last4 %>
+                      </div>
+                      <div class="flex justify-between text-xs text-gray-600">
+                        <div>
+                          <p>Exp</p>
+                          <p class="font-semibold"><%= "%02d" % card.exp_month %>/<%= card.exp_year %></p>
+                        </div>
+                        <div>
+                          <p>CVV</p>
+                          <p class="font-bold">•••</p>
+                        </div>
+                      </div>
                     </div>
-                    <!--pay card-->
-                    <div data-payment-target="cardForm">
-                      <%= form_with url: payments_path(
-                        cart_id: @cart.id, 
-                        user_id: @current_user.id,
-                        total: @total
-                      ), method: :post do |form| %>
-                        <%= form.submit "Confirm and Pay", class: "bg-[#23403D] hover:bg-[#2f5c57] text-white text-[16px] font-medium px-6 py-4 rounded-full transition duration-200"%>
-                      <% end %>
-                    </div>
-                  </div>
-                  <!-- Continue Shopping -->
-                  <div class="mt-8">
-                    <%= link_to "Continue shopping", products_path, class: "inline-block bg-white border border-gray-300 hover:border-gray-400 text-gray-700 px-6 py-2 rounded-full shadow-sm transition" %>
-                  </div>
-                <% else %>
-                  <div class="text-center text-gray-500 mt-6">
-                    <p>Your cart is empty.</p>
-                    <%= link_to "Continue shopping", products_path, class: "text-blue-500 hover:text-blue-600 underline" %>
-                  </div>
+                  </label>
                 <% end %>
+                <label for="" class="flex items-center space-x-4 cursor-pointer rounded-md  p-3  transition-colors duration-200">
+                  <input
+                    type="radio"
+                    name="payment_method_id"
+                    value=""
+                    class="w-5 h-5 text-[#23403D] focus:ring-[#23403D] border-gray-300 rounded"
+                  />
+                    <div class="w-72 relative bg-red-100 rounded-xl shadow-lg p-4 text-gray-800">
+                      <div class="flex justify-between mb-2">
+                        <div>
+                          <p class="font-bold tracking-wider uppercase">Pay with new Card</p>
+                        </div>
+                      </div>
+                    <div class="font-mono tracking-widest text-lg mb-2">
+                    </div>
               </div>
+            </label>
             </div>
           </div>
-          <!-- Cart Totals -->
-          <%= render 'carts/total'%>
-        </div>
+                <%= form.submit "Confirm and Pay", class: "bg-[#23403D] hover:bg-[#2f5c57] text-white text-[16px] font-medium px-6 py-4 rounded-full transition duration-200"%>
+              <% end %>
+            </div>
+          </div>
+          <!-- Continue Shopping -->
+          <div class="mt-8">
+            <%= link_to "Continue shopping", products_path, class: "inline-block bg-white border border-gray-300 hover:border-gray-400 text-gray-700 px-6 py-2 rounded-full shadow-sm transition" %>
+          </div>
+        <% else %>
+          <div class="text-center text-gray-500 mt-6">
+            <p>Your cart is empty.</p>
+            <%= link_to "Continue shopping", products_path, class: "text-blue-500 hover:text-blue-600 underline" %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
+  <!-- Cart Totals -->
+  <%= render 'carts/total'%>
+</div>
+</div>
+</div>
+</div>
 <% else %>
   <h1 class="text-3xl font-bold text-[#152420] mb-8 text-center">Your Cart</h1>
   <div data-controller="cnlogin" class="py-8">
