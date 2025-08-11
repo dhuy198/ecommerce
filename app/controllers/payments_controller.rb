@@ -26,13 +26,20 @@ class PaymentsController < ApplicationController
             quantity: item.quantity
             }
         end
-        success_url = url_for(controller: 'payments', action: 'success', only_path: false, booking_params: payments_params.except(:stripeToken))
+
+        success_url = url_for(
+            controller: 'payments', 
+            action: 'success', 
+            only_path: false, 
+            booking_params: payments_params.except(:stripeToken), 
+        )
+
         session = Stripe::Checkout::Session.create({
             payment_method_types: ['card'],
             line_items: line_items,
             mode: 'payment',
             customer: stripe_customer.id,
-            success_url: success_url,
+            success_url: "#{root_url}payments/success?session_id={CHECKOUT_SESSION_ID}"
             # cancel_url: 
         })
         redirect_to session.url, allow_other_host: true, status:303
@@ -56,8 +63,21 @@ class PaymentsController < ApplicationController
 
     def success
         cart = current_user.cart
-        if cart.cart_items.empty?
-            return render json: { error: "Empty order" }, payment_status: :unprocessable_entity
+        session_id = params[:session_id]
+        checkout_session = Stripe::Checkout::Session.retrieve(session_id)
+
+        payment_intent = Stripe::PaymentIntent.retrieve(checkout_session.payment_intent)
+
+        payment_method = Stripe::PaymentMethod.retrieve(payment_intent.payment_method)
+
+        Card.find_or_create_by!(
+            user_id: current_user.id,
+            stripe_card_id: payment_method.id
+        ) do |card|
+            card.brand = payment_method.card.brand
+            card.last4 = payment_method.card.last4
+            card.exp_month = payment_method.card.exp_month
+            card.exp_year = payment_method.card.exp_year
         end
 
         order = current_user.orders.create!(
