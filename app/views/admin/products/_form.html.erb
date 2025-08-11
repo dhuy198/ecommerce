@@ -19,7 +19,11 @@
   </div>
   <div>
     <%= f.label :price, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.number_field :price, step: 0.01, class: "mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    <%= f.number_field :price, step: 0.1, class: "mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+  <div>
+    <%= f.label :ex_price, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.number_field :ex_price, step: 0.1, class: "mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
   </div>
   <div>
     <%= f.label :stock, class: "block text-sm font-medium text-gray-700" %>

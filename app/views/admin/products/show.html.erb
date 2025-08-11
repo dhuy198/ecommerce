@@ -21,5 +21,6 @@
   <div class="flex space-x-3 pt-4">
     <%= link_to 'Edit', edit_admin_product_path(@product), class: "bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded transition" %>
     <%= link_to 'Back', admin_products_path, class: "bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded transition" %>
+    <%= button_to 'Delete', admin_product_path(@product), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded transition" %>
   </div>
 </div>
