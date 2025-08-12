@@ -1,0 +1,25 @@
+<%= form_with model: [:admin, @coupon], local: true, class: "space-y-4" do |f| %>
+  <% if f.object.errors.any? %>
+    <div class="bg-red-100 text-red-700 p-4 rounded-lg border border-red-200">
+      <ul class="list-disc pl-5">
+        <% f.object.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div>
+    <%= f.label :code, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :code, class: "mt-1 w-full border border-gray-300 rounded px-3 py-2" %>
+  </div>
+  <div>
+    <%= f.label :discount_percentage, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.number_field :discount_percentage, step: 1, class: "mt-1 w-full border border-gray-300 rounded px-3 py-2" %>
+  </div>
+  <div>
+    <%= f.label :active, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.select :active, [["Active", true], ["Inactive", false]], {}, class: "mt-1 w-full border border-gray-300 rounded px-3 py-2" %>
+  </div>
+  <%= f.submit "Save Coupon", 
+        class: "bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-lg shadow transition" %>
+<% end %>

@@ -1,0 +1,18 @@
+<div class="w-full mx-auto m-10 p-10">
+  <div class="space-y-3 text-gray-700 text-sm">
+    <p><strong>Code:</strong> <%= @coupon.code %></p>
+    <p><strong>Discount_Percentage:</strong> <%= @coupon.discount_percentage %></p>
+    <p><strong>Active:</strong> <%= @coupon.active %></p>
+    <p><strong>Created At:</strong> <%= @coupon.created_at.strftime("%Y-%m-%d %H:%M") %></p>
+  </div>
+  <div class="mt-6 flex space-x-3">
+    <%= link_to "Back", admin_coupons_path, 
+          class: "bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg shadow transition" %>
+    <%= link_to "Edit", edit_admin_coupon_path(@coupon), 
+          class: "bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg shadow transition" %>
+    <%= button_to "Delete", admin_coupon_path(@coupon), 
+          method: :delete, 
+          data: { confirm: "Are you sure?" }, 
+          class: "bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow transition" %>
+  </div>
+</div>
