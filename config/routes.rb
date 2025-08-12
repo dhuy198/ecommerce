@@ -46,9 +46,15 @@ Rails.application.routes.draw do
     resources :reviews
     resources :taxes
     resources :pages
+    resources :coupons
   end
   namespace :api do 
     namespace :v1 do 
+      resources :coupons, only: [] do
+        collection do
+          post :apply
+        end
+      end
       resources :wishlist_items, only: [:create, :destroy]
       resources :cart_items, only: [:create, :destroy] do 
         member do

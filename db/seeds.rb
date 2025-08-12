@@ -16,6 +16,9 @@ Category.create!([
   { name: "Decor"}
 ])
 
+Coupon.create(code: "STUDENT10", discount_percentage: 10, active: true)
+Coupon.create(code: "FRESHER20", discount_percentage: 20, active: true)
+
 user1 = User.create!(email: "user1@example.com", password: "123456", name: "user1", address: "Hanoi Vietnam")
 user2= User.create!(email: "user2@example.com", password: "123456", name: "user2", address: "Ho Chi Minh Vietnam")
 user3 = User.create!(email: "user3@example.com", password: "123456", name: "user3", address: "Ho Chi Minh Vietnam")
