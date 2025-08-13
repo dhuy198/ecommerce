@@ -123,8 +123,7 @@
                           type="radio"
                           name="payment_method_id"
                           id="card_<%= index %>"
-                          value="<%= card.stripe_card_id %>"
-                          checked  
+                          value="<%= card.stripe_card_id %>"  
                           class="w-5 h-5 text-[#23403D] focus:ring-[#23403D] border-gray-300 rounded"
                         />
                       <div class="w-72 relative bg-red-100 rounded-xl shadow-lg p-4 text-gray-800">
@@ -155,6 +154,7 @@
                     type="radio"
                     name="payment_method_id"
                     value=""
+                    checked
                     class="w-5 h-5 text-[#23403D] focus:ring-[#23403D] border-gray-300 rounded"
                   />
                     <div class="w-72 relative bg-red-100 rounded-xl shadow-lg p-4 text-gray-800">

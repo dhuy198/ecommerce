@@ -43,18 +43,7 @@ class OrdersController < ApplicationController
 
   @order = Order.new(order_params)
   @order.total = total
-
-  success_url = url_for(controller: 'payments', action: 'success', only_path: false, booking_params: payments_params.except(:stripeToken))
-  session = Stripe::Checkout::Session.create({
-      payment_method_types: ['card'],
-      line_items: line_items,
-      mode: 'payment',
-      customer: stripe_customer.id,
-      success_url: success_url,
-      # cancel_url: 
-  })
-  redirect_to session.url, allow_other_host: true, status:303
-
+    
   if @order.save
     order_items.each do |item|
       @order.order_items.create!(
