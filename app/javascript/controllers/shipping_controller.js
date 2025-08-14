@@ -33,14 +33,16 @@ export default class extends Controller {
     };
 
     const errors = [];
-    if (!full_name.trim()) {
-      errors.push("Please enter your name");
+    if (!full_name.trim() || !/^[a-zA-ZÀ-ỹ\s]{2,50}$/.test(full_name)) {
+      errors.push(
+        "Name must be at least 2 letters and only contain letters/spaces."
+      );
     }
-    if (!phone_number.trim() || !/^\d+$/.test(phone_number)) {
-      errors.push("Please enter a valid phone number");
+    if (!phone_number.trim() || !/^\d{9,11}$/.test(phone_number)) {
+      errors.push("Phone must be 9–11 digits.");
     }
-    if (!address.trim()) {
-      errors.push("Please enter your address");
+    if (!address.trim() || address.length < 5) {
+      errors.push("Address must be at least 5 characters.");
     }
     if (!city.trim()) {
       errors.push("Please enter your city");
@@ -48,7 +50,7 @@ export default class extends Controller {
     if (!district.trim()) {
       errors.push("Please enter your district");
     }
-    if (!postal_code.trim() || !/^\d+$/.test(postal_code)) {
+    if (!postal_code.trim() || !/^\d{5,6}$/.test(postal_code)) {
       errors.push("Please enter a valid postal code");
     }
     if (!country.trim()) {

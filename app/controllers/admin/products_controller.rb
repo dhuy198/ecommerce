@@ -7,6 +7,8 @@ class Admin::ProductsController < Admin::ApplicationController
   end
 
   def show
+    @reviews = @product.reviews.includes(:user).order(created_at: :desc)
+
   end
 
   def new

@@ -1,48 +1,53 @@
-<%= form_with model: @order, remote: true, class: "max-w-lg mx-auto bg-white shadow-lg rounded-2xl p-8 space-y-6" do |f| %>
+<%= form_with model: @order, remote: true, 
+      data: { controller: "checkoutnlg" }, 
+      class: "max-w-lg mx-auto bg-white shadow-lg rounded-2xl p-8 space-y-6" do |f| %>
   <h2 class="text-3xl font-bold text-center text-gray-800">Shipping Information</h2>
+  <%# Khung báo lỗi %>
+  <div class="bg-red-50 border border-red-200 text-red-700 p-4 rounded-md hidden" 
+       data-checkoutnlg-target="errors"></div>
   <%# Full Name %>
   <div>
     <%= f.label :gname, "Full Name*", class: "block text-sm font-medium text-gray-700 mb-1" %>
-    <%= f.text_field :gname, class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none transition duration-150" %>
+    <%= f.text_field :gname, data: { "checkoutnlg-target": "name" }, 
+          class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none transition duration-150" %>
   </div>
-  <%# Email %>
   <div>
     <%= f.label :gemail, "Email*", class: "block text-sm font-medium text-gray-700 mb-1" %>
-    <%= f.email_field :gemail, class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none transition duration-150" %>
+    <%= f.email_field :gemail, data: { "checkoutnlg-target": "email" }, 
+        class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none transition duration-150" %>
   </div>
   <%# Phone %>
   <div>
     <%= f.label :gphone, "Phone Number*", class: "block text-sm font-medium text-gray-700 mb-1" %>
-    <%= f.telephone_field :gphone, class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none transition duration-150" %>
+    <%= f.telephone_field :gphone, data: { "checkoutnlg-target": "phone" }, 
+          class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none transition duration-150" %>
   </div>
   <%# Address %>
   <div>
     <%= f.label :gaddress, "Address*", class: "block text-sm font-medium text-gray-700 mb-1" %>
-    <%= f.text_field :gaddress, class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none transition duration-150" %>
+    <%= f.text_field :gaddress, data: { "checkoutnlg-target": "address" }, 
+          class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none transition duration-150" %>
   </div>
   <%# City %>
   <div>
     <%= f.label :gcity, "City*", class: "block text-sm font-medium text-gray-700 mb-1" %>
-    <%= f.text_field :gcity, class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none transition duration-150" %>
+    <%= f.text_field :gcity, data: { "checkoutnlg-target": "city" }, 
+          class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none transition duration-150" %>
   </div>
   <%# Country %>
   <div>
     <%= f.label :gcountry, "Country*", class: "block text-sm font-medium text-gray-700 mb-1" %>
-    <%= f.text_field :gcountry, class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none transition duration-150" %>
+    <%= f.text_field :gcountry, data: { "checkoutnlg-target": "country" }, 
+          class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none transition duration-150" %>
   </div>
   <%# Hidden fields %>
   <%= f.hidden_field :payment_status, value: "unpaid" %>
   <%= f.hidden_field :payment_method, value: "COD" %>
   <%= f.hidden_field :deliverd_status, value: "pending" %>
-  <%= hidden_field_tag :cart_items, "", id: "cart-items-field" %>
+  <%= hidden_field_tag :cart, "", id: "cart-items-field" %>
   <%# Submit button %>
   <div class="pt-4">
-    <%= f.submit "Place Order", class: "w-full bg-black hover:bg-gray-800 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150" %>
+    <%= f.submit "Place Order", data: { action: "checkoutnlg#send" }, 
+          class: "w-full bg-black hover:bg-gray-800 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150" %>
   </div>
 <% end %>
-<script>
-  document.addEventListener("turbo:load", () => {
-    const cart = localStorage.getItem("cart") || "[]";
-    document.getElementById("cart-items-field").value = cart;
-  });
-</script>

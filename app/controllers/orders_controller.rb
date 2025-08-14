@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user!, only: [:index, :show]
   def index
-    @orders = current_user.orders.order(created_at: :desc)
+    @orders = current_user.orders.order(created_at: :desc) 
   end
 
   def show
@@ -12,12 +13,12 @@ class OrdersController < ApplicationController
   end
 
   def create
-  cart_items = JSON.parse(params[:cart_items] || "[]")
+  cart = JSON.parse(params[:cart] || "[]")
   total = 0
   order_items = []
   stock_errors = []
-
-  cart_items.each do |item|
+  p cart
+  cart.each do |item|
     product = Product.find_by(id: item["id"])
     quantity = item["quantity"].to_i
     next unless product
@@ -57,6 +58,7 @@ class OrdersController < ApplicationController
     OrderMailer.thank(@order).deliver_later
     redirect_to cart_path, notice: "Đặt hàng thành công"
   else
+    Rails.logger.info @order.errors.full_messages
     render :new, status: :unprocessable_entity
   end
 end
