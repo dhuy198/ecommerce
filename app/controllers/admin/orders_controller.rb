@@ -1,6 +1,6 @@
 class Admin::OrdersController < Admin::ApplicationController
   before_action :authenticate_admin!
-  before_action :set_order, only: [:show, :edit, :update]
+  before_action :set_order, only: [:show, :edit, :update, :refund]
 
   def index
     @orders = Order.includes(:user).order(created_at: :desc)
@@ -31,6 +31,12 @@ class Admin::OrdersController < Admin::ApplicationController
     end
   end
 
+  def refund
+    if @order.payment_status == 'paid' && @order.deliverd_status == 'delivered'
+      @order.update(is_cancel: true)
+      redirect_to admin_orders_path, alert: "Refund processed successfully"
+    end
+  end
   private
 
   def set_order

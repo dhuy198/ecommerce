@@ -40,7 +40,11 @@ Rails.application.routes.draw do
   namespace :admin do 
     root to: "pages#index"
     resources :users
-    resources :orders 
+    resources :orders do
+      member do
+        post :refund
+      end
+    end
     resources :categories
     resources :products
     resources :reviews
