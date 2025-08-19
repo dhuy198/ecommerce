@@ -19,10 +19,15 @@
 <h3 style="color:#2c3e50;">Thông tin đơn hàng:</h3>
 <ul style="font-size:15px; color:#555;">
   <% @order.order_items.each do |item| %>
-    <li>
-      <%= item.product.name %> - 
-      <%= item.quantity %> x 
-      <%= number_to_currency(item.price) %>
+    <li style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+      <% if item.product.images.attached? %>
+        <%= image_tag item.product.images.first, size: "40x40", class: "rounded-md border" %>
+      <% end %>
+      <span>
+        <%= item.product.name %> - 
+        <%= item.quantity %> x 
+        <%= number_to_currency(item.price) %>
+      </span>
     </li>
   <% end %>
 </ul>

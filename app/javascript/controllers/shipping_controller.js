@@ -83,6 +83,7 @@ export default class extends Controller {
         window.location.href = "/cart";
       })
       .catch((e) => {
+        this.clearErrors();
         console.error("Lỗi gửi request:", e);
       });
   }

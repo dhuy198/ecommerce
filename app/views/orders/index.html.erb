@@ -2,8 +2,11 @@
 <div class="bg-[#f9fafb] min-h-screen py-10">
   <div class="max-w-4xl mx-auto px-6">
     <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">Order List</h1>
-    <% if @orders.any? %>
-      <% @orders.each do |order| %>
+    <% completed_orders = @orders.select { |o| o.payment_status == 'paid' && o.deliverd_status == 'delivered' } %>
+    <% other_orders = @orders - completed_orders %>
+    <h2 class="text-2xl font-semibold text-yellow-700 mb-4">Other Orders</h2>
+    <% if other_orders.any? %>
+      <% other_orders.each do |order| %>
         <div class="bg-white border border-gray-200 shadow-md rounded-xl mb-8 p-6">
           <div class="grid md:grid-cols-2 gap-4 mb-4 text-gray-700">
             <%= link_to order_path(order) do %>
@@ -15,41 +18,47 @@
             <div><strong>Total:</strong> <span class="text-teal-600 font-semibold"><%= number_to_currency(order.total) %></span></div>
             <div><strong>Status:</strong>
               <span class="inline-block px-3 py-1 text-sm rounded-full bg-<%= order.payment_status == 'paid' ? 'green' : 'yellow' %>-100 text-<%= order.payment_status == 'paid' ? 'green' : 'yellow' %>-700">
-                <%= order.payment_status.titleize %>
+                <%= order.payment_status.titleize %> / <%= order.deliverd_status.titleize %>
               </span>
             </div>
           </div>
           <div>
-            <h2 class="text-md font-semibold text-gray-800 mb-2">Product</h2>
-            <div class="overflow-x-auto">
-              <table class="w-full text-sm text-left text-gray-600 border">
-                <thead class="bg-gray-100 text-gray-700 uppercase">
-                  <tr>
-                    <th class="px-4 py-2">Product</th>
-                    <th class="px-4 py-2">Quantity</th>
-                    <th class="px-4 py-2">Price</th>
-                    <th class="px-4 py-2">Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% order.order_items.each do |item| %>
-                    <tr class="border-t">
-                      <td class="px-4 py-2"><%= item.product.name %></td>
-                      <td class="px-4 py-2">x<%= item.quantity %></td>
-                      <td class="px-4 py-2"><%= number_to_currency(item.price) %></td>
-                      <td class="px-4 py-2 font-semibold text-teal-700"><%= number_to_currency(item.price * item.quantity) %></td>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
           </div>
         </div>
       <% end %>
     <% else %>
       <div class="bg-white shadow-md rounded-xl p-6 text-center text-gray-600">
-        Bạn chưa có đơn hàng nào.
+        Không có đơn hàng nào khác.
       </div>
     <% end %>
+    <!-- Completed Orders -->
+    <h2 class="text-2xl font-semibold text-green-700 mb-4">Completed Orders</h2>
+    <% if completed_orders.any? %>
+      <% completed_orders.each do |order| %>
+        <div class="bg-white border border-gray-200 shadow-md rounded-xl mb-8 p-6">
+          <div class="grid md:grid-cols-2 gap-4 mb-4 text-gray-700">
+            <%= link_to order_path(order) do %>
+              <div class="underline">
+                <strong>Order detail:</strong> <%= order.id %>
+              </div>
+            <% end %>
+            <div><strong>Order date:</strong> <%= order.created_at.strftime("%d/%m/%Y %H:%M") %></div>
+            <div><strong>Total:</strong> <span class="text-teal-600 font-semibold"><%= number_to_currency(order.total) %></span></div>
+            <div><strong>Status:</strong>
+              <span class="inline-block px-3 py-1 text-sm rounded-full bg-green-100 text-green-700">
+                Paid & Delivered
+              </span>
+            </div>
+          </div>
+          <div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="bg-white shadow-md rounded-xl p-6 text-center text-gray-600 mb-10">
+        Không có đơn hàng hoàn tất.
+      </div>
+    <% end %>
+    <!-- Other Orders -->
   </div>
 </div>

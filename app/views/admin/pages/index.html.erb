@@ -25,7 +25,6 @@
           <p class="text-xl pb-3 flex items-center">
             <i class="fas fa-list mr-3"></i> Latest Orders 
           </p>
-          <h2 class="text-xl font-semibold mb-3">With Sign in</h2>
           <div class="overflow-x-auto bg-white rounded-lg shadow">
             <table class="min-w-full text-sm text-left border-collapse">
               <thead class="bg-gray-100 border-b">
@@ -56,44 +55,6 @@
                       <td class="px-6 py-4 space-x-2">
                         <%= link_to 'Show', admin_order_path(order), class: "text-blue-600 hover:underline" %>
                         <%= link_to 'Edit', edit_admin_order_path(order), class: "text-yellow-600 hover:underline" %>
-                      </td>
-                    </tr>
-                  <% end %>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
-          <h2 class="text-xl font-semibold mt-8 mb-3">Without Login</h2>
-          <div class="overflow-x-auto bg-white rounded-lg shadow">
-            <table class="min-w-full text-sm text-left border-collapse">
-              <thead class="bg-gray-100 border-b">
-                <tr>
-                  <th class="px-6 py-3 font-medium text-gray-700">ID</th>
-                  <th class="px-6 py-3 font-medium text-gray-700">Guest Name</th>
-                  <th class="px-6 py-3 font-medium text-gray-700">Email</th>
-                  <th class="px-6 py-3 font-medium text-gray-700">Phone</th>
-                  <th class="px-6 py-3 font-medium text-gray-700">Address</th>
-                  <th class="px-6 py-3 font-medium text-gray-700">City</th>
-                  <th class="px-6 py-3 font-medium text-gray-700">Country</th>
-                  <th class="px-6 py-3 font-medium text-gray-700">Created At</th>
-                  <th class="px-6 py-3 font-medium text-gray-700 text-center">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% @orders.each do |order| %>
-                  <% if order.user_id.nil? %>
-                    <tr class="border-t hover:bg-gray-50">
-                      <td class="px-6 py-4"><%= order.id %></td>
-                      <td class="px-6 py-4"><%= order.gname %></td>
-                      <td class="px-6 py-4"><%= order.gemail %></td>
-                      <td class="px-6 py-4"><%= order.gphone %></td>
-                      <td class="px-6 py-4"><%= order.gaddress %></td>
-                      <td class="px-6 py-4"><%= order.gcity %></td>
-                      <td class="px-6 py-4"><%= order.gcountry %></td>
-                      <td class="px-6 py-4"><%= l(order.created_at, format: :short) %></td>
-                      <td class="px-6 py-4 text-center space-x-2">
-                        <%= link_to "Show", admin_order_path(order), class: "text-blue-600 hover:underline" %>
-                        <%= link_to "Edit", edit_admin_order_path(order), class: "text-yellow-600 hover:underline" %>
                       </td>
                     </tr>
                   <% end %>

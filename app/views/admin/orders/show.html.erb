@@ -16,6 +16,7 @@
       <thead>
         <tr class="bg-gray-100 text-left text-gray-700 text-sm">
           <th class="px-6 py-3 border-b">Product</th>
+          <th class="px-6 py-3 border-b">Image</th>
           <th class="px-6 py-3 border-b">Quantity</th>
           <th class="px-6 py-3 border-b">Price</th>
           <th class="px-6 py-3 border-b">Subtotal</th>
@@ -25,6 +26,7 @@
         <% @order.order_items.each do |item| %>
           <tr class="hover:bg-gray-50">
             <td class="px-6 py-4 border-b"><%= item.product.name %></td>
+            <td class="px-6 py-4 border-b"><%= image_tag item.product.images.first, size: "80x80", class: "rounded-md " %></td>
             <td class="px-6 py-4 border-b"><%= item.quantity %></td>
             <td class="px-6 py-4 border-b"><%= number_to_currency(item.price || item.product.price) %></td>
             <td class="px-6 py-4 border-b">

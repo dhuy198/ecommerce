@@ -196,7 +196,7 @@ class PaymentsController < ApplicationController
       total: 0,
       payment_status: "paid",
       deliverd_status: "pending",
-      payment_method: "cart",
+      payment_method: "card",
       shipping_address: current_user.address,
     )
 

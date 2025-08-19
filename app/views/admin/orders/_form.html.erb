@@ -8,50 +8,56 @@
       </ul>
     </div>
   <% end %>
-  <!-- Guest Info -->
+  <!-- Order Info -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <div>
-      <%= f.label :gname, "Guest Name", class: "block text-sm font-medium text-gray-700" %>
-      <%= f.text_field :gname, class: "mt-1 block w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+      <%= f.label :total, "Total", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.number_field :total, step: 0.01, disabled: true, 
+            class: "mt-1 block w-full border border-gray-300 px-3 py-2 rounded-lg bg-gray-100 text-gray-500" %>
     </div>
     <div>
-      <%= f.label :gemail, "Guest Email", class: "block text-sm font-medium text-gray-700" %>
-      <%= f.email_field :gemail, class: "mt-1 block w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+      <%= f.label :shipping_address, "Shipping Address", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :shipping_address, disabled: true, 
+            class: "mt-1 block w-full border border-gray-300 px-3 py-2 rounded-lg bg-gray-100 text-gray-500" %>
+    </div>
+  </div>
+  <!-- Payment -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <%= f.label :payment_status, "Payment Status", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.select :payment_status, ["paid", "unpaid"], {},
+            class: "mt-1 block w-full border border-gray-300 px-3 py-2 rounded-lg" %>
     </div>
     <div>
-      <%= f.label :gphone, "Guest Phone", class: "block text-sm font-medium text-gray-700" %>
-      <%= f.text_field :gphone, class: "mt-1 block w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+      <%= f.label :payment_method, "Payment Method", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :payment_method, disabled: true, 
+            class: "mt-1 block w-full border border-gray-300 px-3 py-2 rounded-lg bg-gray-100 text-gray-500" %>
     </div>
-    <div>
-      <%= f.label :gaddress, "Guest Address", class: "block text-sm font-medium text-gray-700" %>
-      <%= f.text_field :gaddress, class: "mt-1 block w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-    </div>
-    <div>
-      <%= f.label :gcity, "Guest City", class: "block text-sm font-medium text-gray-700" %>
-      <%= f.text_field :gcity, class: "mt-1 block w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-    </div>
-    <div>
-      <%= f.label :gcountry, "Guest Country", class: "block text-sm font-medium text-gray-700" %>
-      <%= f.text_field :gcountry, class: "mt-1 block w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-    </div>
+  </div>
+  <!-- Delivery (Editable) -->
+  <div>
+    <%= f.label :deliverd_status, "Delivered Status", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.select :deliverd_status, ["pending", "shipping", "delivered"], {}, 
+          class: "mt-1 block w-full border border-gray-300 px-3 py-2 rounded-lg" %>
   </div>
   <!-- Order Items -->
   <div>
     <h3 class="text-lg font-semibold border-b pb-2 mb-4">Order Items</h3>
     <div id="order-items" class="space-y-3">
-      <%= f.fields_for :order_items do |item_form| %>
-        <div class="flex space-x-3">
-          <%= item_form.collection_select :product_id, Product.all, :id, :name, {}, 
-                class: "block w-2/3 border border-gray-300 px-3 py-2 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-          <%= item_form.number_field :quantity, min: 1, 
-                class: "block w-1/3 border border-gray-300 px-3 py-2 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+      <% @order.order_items.each do |item| %>
+        <div class="flex space-x-3 items-center">
+          <%= text_field_tag nil, item.product.name, disabled: true, 
+                class: "block w-2/3 border border-gray-300 px-3 py-2  bg-gray-100 text-gray-500" %>
+          <%= image_tag item.product.images.first, size: "40x40", class: "rounded-md "%>
+          <%= number_field_tag nil, item.quantity, disabled: true, 
+                class: "block w-1/3 border border-gray-300 px-3 py-2 rounded-lg bg-gray-100 text-gray-500" %>
         </div>
       <% end %>
     </div>
   </div>
   <!-- Submit -->
   <div>
-    <%= f.submit "Save Order", 
-          class: "bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg shadow-md transition-colors" %>
+    <%= f.submit "Update Status", 
+          class: "bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg shadow-md transition-colors" %>
   </div>
 <% end %>
